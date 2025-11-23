@@ -10,7 +10,7 @@ function FloatingButton({ onClick }: { onClick: () => void }) {
     <button
       onClick={onClick}
       className="chat-fab"
-      aria-label="Ask the Guide"
+      aria-label="Open chat"
     >
       <svg
         className="w-6 h-6"
@@ -25,7 +25,6 @@ function FloatingButton({ onClick }: { onClick: () => void }) {
           d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
         />
       </svg>
-      <span className="ml-2 font-medium">Ask the Guide</span>
     </button>
   );
 }
@@ -298,7 +297,7 @@ function BottomSheetChat({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Input */}
-        <div className="px-4 py-3 border-t border-gray-200 bg-white safe-area-bottom">
+        <div className="px-4 py-3 border-t border-gray-200 bg-white rounded-b-[var(--radius-2xl)]">
           <ChatInput onSend={sendMessage} disabled={isLoading} />
         </div>
       </div>
