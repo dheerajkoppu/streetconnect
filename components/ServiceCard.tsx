@@ -33,37 +33,33 @@ export function ServiceCard({ service, userLocation }: ServiceCardProps) {
       )}`;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <article className="service-card">
       {/* Main card content - tappable to go to detail */}
-      <Link href={`/services/${service.id}`} className="block p-4">
-        <div className="flex justify-between items-start gap-2 mb-2">
-          <h3 className="text-lg font-semibold text-gray-900 leading-tight">
-            {service.name}
-          </h3>
+      <Link href={`/services/${service.id}`} className="block service-card-content">
+        {/* Title and distance row */}
+        <div className="flex justify-between items-start gap-3 mb-3">
+          <h3 className="service-card-title">{service.name}</h3>
           {distance !== null && (
-            <span className="text-sm text-gray-500 whitespace-nowrap">
+            <span className="text-sm font-semibold text-slate-500 whitespace-nowrap bg-slate-100 px-2 py-1 rounded-lg">
               {formatDistance(distance)}
             </span>
           )}
         </div>
 
         {/* Category tags */}
-        <div className="flex flex-wrap gap-1.5 mb-2">
+        <div className="flex flex-wrap gap-2 mb-3">
           {service.categories.slice(0, 3).map((cat) => (
-            <span
-              key={cat}
-              className="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded-full"
-            >
+            <span key={cat} className="tag tag-category">
               {getCategoryLabel(cat)}
             </span>
           ))}
         </div>
 
-        {/* Open status */}
-        <div className="mb-2">
+        {/* Open status - prominent display */}
+        <div className="mb-3">
           <span
             className={`
-              inline-block px-2 py-0.5 rounded-full text-xs font-medium
+              inline-block px-3 py-1.5 rounded-lg text-sm
               ${openStatus.color === "green" ? "status-open" : ""}
               ${openStatus.color === "red" ? "status-closed" : ""}
               ${openStatus.color === "yellow" ? "status-closing" : ""}
@@ -74,23 +70,24 @@ export function ServiceCard({ service, userLocation }: ServiceCardProps) {
         </div>
 
         {/* Description */}
-        <p className="text-sm text-gray-600 line-clamp-2">
+        <p className="service-card-description line-clamp-2">
           {service.descriptionShort}
         </p>
       </Link>
 
-      {/* Action buttons */}
-      <div className="flex border-t border-gray-100">
+      {/* Action buttons - large tap targets */}
+      <div className="flex border-t-2 border-slate-100">
         {service.phone && (
           <a
             href={`tel:${service.phone}`}
-            className="flex-1 flex items-center justify-center gap-2 py-3 text-blue-600 font-medium hover:bg-blue-50 active:bg-blue-100 transition-colors"
+            className="action-btn text-[var(--primary)] hover:bg-blue-50 active:bg-blue-100"
           >
             <svg
               className="w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -106,13 +103,14 @@ export function ServiceCard({ service, userLocation }: ServiceCardProps) {
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 flex items-center justify-center gap-2 py-3 text-blue-600 font-medium hover:bg-blue-50 active:bg-blue-100 transition-colors border-l border-gray-100"
+          className={`action-btn text-[var(--primary)] hover:bg-blue-50 active:bg-blue-100 ${service.phone ? "border-l-2 border-slate-100" : ""}`}
         >
           <svg
             className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
@@ -131,44 +129,51 @@ export function ServiceCard({ service, userLocation }: ServiceCardProps) {
         </a>
       </div>
 
-      {/* Expandable details */}
+      {/* Expandable details toggle */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full py-2 px-4 text-sm text-gray-500 hover:bg-gray-50 flex items-center justify-center gap-1 border-t border-gray-100"
+        className="w-full py-3 px-5 text-sm font-medium text-slate-500 hover:bg-slate-50 active:bg-slate-100 flex items-center justify-center gap-2 border-t-2 border-slate-100 transition-colors"
+        aria-expanded={isExpanded}
+        aria-controls={`details-${service.id}`}
       >
-        {isExpanded ? "Less info" : "More info"}
+        {isExpanded ? "Show less" : "Show more"}
         <svg
-          className={`w-4 h-4 transition-transform ${isExpanded ? "rotate-180" : ""}`}
+          className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={2}
+            strokeWidth={2.5}
             d="M19 9l-7 7-7-7"
           />
         </svg>
       </button>
 
+      {/* Expandable details section */}
       {isExpanded && (
-        <div className="px-4 pb-4 space-y-3 text-sm border-t border-gray-100 pt-3">
+        <div
+          id={`details-${service.id}`}
+          className="px-5 pb-5 space-y-4 border-t-2 border-slate-100 pt-4 animate-fade-in"
+        >
           {/* Address */}
           <div>
-            <h4 className="font-medium text-gray-700 mb-1">Address</h4>
-            <p className="text-gray-600">
+            <h4 className="text-sm font-semibold text-slate-700 mb-1">Address</h4>
+            <address className="text-slate-600 not-italic leading-relaxed">
               {service.address.street}
               <br />
               {service.address.city}, {service.address.state}{" "}
               {service.address.postalCode}
-            </p>
+            </address>
           </div>
 
           {/* Today's hours */}
           <div>
-            <h4 className="font-medium text-gray-700 mb-1">Hours today</h4>
-            <p className="text-gray-600">
+            <h4 className="text-sm font-semibold text-slate-700 mb-1">Today&apos;s hours</h4>
+            <p className="text-slate-600">
               {formatDayHours(getTodayHours(service.hours))}
             </p>
           </div>
@@ -176,21 +181,35 @@ export function ServiceCard({ service, userLocation }: ServiceCardProps) {
           {/* Eligibility */}
           {service.eligibility.description && (
             <div>
-              <h4 className="font-medium text-gray-700 mb-1">Who can come</h4>
-              <p className="text-gray-600">{service.eligibility.description}</p>
+              <h4 className="text-sm font-semibold text-slate-700 mb-1">Who can come</h4>
+              <p className="text-slate-600">{service.eligibility.description}</p>
             </div>
           )}
+
+          {/* Quick features */}
+          <div className="flex flex-wrap gap-2">
+            {service.flags.noIDRequired && (
+              <span className="tag tag-feature">No ID needed</span>
+            )}
+            {service.flags.lowBarrier && (
+              <span className="tag tag-feature">Low barrier</span>
+            )}
+            {service.accessibility.wheelchairAccessible && (
+              <span className="tag tag-feature">Wheelchair OK</span>
+            )}
+            {service.accessibility.petsAllowed && (
+              <span className="tag tag-feature">Pets OK</span>
+            )}
+          </div>
 
           {/* Notes */}
           {service.notes.length > 0 && (
             <div>
-              <h4 className="font-medium text-gray-700 mb-1">
-                What to know
-              </h4>
-              <ul className="text-gray-600 space-y-1">
+              <h4 className="text-sm font-semibold text-slate-700 mb-2">What to know</h4>
+              <ul className="space-y-1.5">
                 {service.notes.slice(0, 3).map((note, i) => (
-                  <li key={i} className="flex gap-2">
-                    <span className="text-gray-400">•</span>
+                  <li key={i} className="flex gap-2 text-slate-600">
+                    <span className="text-[var(--primary)] flex-shrink-0">•</span>
                     <span>{note}</span>
                   </li>
                 ))}
@@ -199,6 +218,6 @@ export function ServiceCard({ service, userLocation }: ServiceCardProps) {
           )}
         </div>
       )}
-    </div>
+    </article>
   );
 }

@@ -57,41 +57,43 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[var(--background)]">
       {/* Header */}
-      <header className="bg-blue-600 text-white px-4 py-4 safe-area-top">
+      <header className="header safe-area-top sticky top-0 z-40">
         <div className="flex items-center gap-3">
           <Link
             href="/"
-            className="p-2 -ml-2 hover:bg-blue-700 rounded-lg transition-colors"
-            aria-label="Go back"
+            className="flex items-center justify-center w-12 h-12 -ml-2 hover:bg-white/10 active:bg-white/20 rounded-xl transition-colors"
+            aria-label="Go back home"
           >
             <svg
               className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={2.5}
                 d="M15 19l-7-7 7-7"
               />
             </svg>
           </Link>
-          <h1 className="text-lg font-semibold truncate">{service.name}</h1>
+          <h1 className="text-lg font-bold truncate flex-1">{service.name}</h1>
         </div>
       </header>
 
       {/* Main content */}
-      <main className="px-4 py-4 space-y-4 pb-8 safe-area-bottom">
-        {/* Status and distance */}
-        <div className="bg-white rounded-xl p-4 shadow-sm">
-          <div className="flex items-center justify-between mb-3">
+      <main className="px-5 py-5 space-y-4 safe-area-bottom">
+        {/* Status and key info card */}
+        <div className="card p-5">
+          {/* Status and distance row */}
+          <div className="flex items-center justify-between mb-4">
             <span
               className={`
-                inline-block px-3 py-1 rounded-full text-sm font-medium
+                inline-block px-3 py-1.5 rounded-lg text-sm
                 ${openStatus.color === "green" ? "status-open" : ""}
                 ${openStatus.color === "red" ? "status-closed" : ""}
                 ${openStatus.color === "yellow" ? "status-closing" : ""}
@@ -100,40 +102,40 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
               {openStatus.text}
             </span>
             {distance !== null && (
-              <span className="text-gray-500">{formatDistance(distance)} away</span>
+              <span className="text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg">
+                {formatDistance(distance)} away
+              </span>
             )}
           </div>
 
           {/* Category tags */}
           <div className="flex flex-wrap gap-2 mb-4">
             {service.categories.map((cat) => (
-              <span
-                key={cat}
-                className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full font-medium"
-              >
+              <span key={cat} className="tag tag-category">
                 {getCategoryLabel(cat)}
               </span>
             ))}
           </div>
 
           {/* Description */}
-          <p className="text-gray-700">
+          <p className="text-slate-700 leading-relaxed">
             {service.descriptionLong || service.descriptionShort}
           </p>
         </div>
 
-        {/* Action buttons */}
+        {/* Action buttons - large and prominent */}
         <div className="flex gap-3">
           {service.phone && (
             <a
               href={`tel:${service.phone}`}
-              className="flex-1 flex items-center justify-center gap-2 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 active:bg-blue-800 transition-colors"
+              className="btn btn-primary flex-1"
             >
               <svg
                 className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -149,13 +151,14 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-2 py-4 bg-white text-blue-600 font-semibold rounded-xl border-2 border-blue-600 hover:bg-blue-50 active:bg-blue-100 transition-colors"
+            className="btn btn-secondary flex-1"
           >
             <svg
               className="w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -177,13 +180,14 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
         {/* Share button */}
         <button
           onClick={handleShare}
-          className="w-full flex items-center justify-center gap-2 py-3 text-gray-600 hover:bg-gray-100 rounded-xl transition-colors"
+          className="w-full flex items-center justify-center gap-2 py-3.5 text-slate-600 font-medium hover:bg-white active:bg-slate-100 rounded-xl transition-colors"
         >
           <svg
             className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
@@ -196,45 +200,47 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
         </button>
 
         {/* Address */}
-        <div className="bg-white rounded-xl p-4 shadow-sm">
-          <h2 className="font-semibold text-gray-900 mb-2">Address</h2>
-          <address className="not-italic text-gray-700">
+        <section className="card p-5">
+          <h2 className="font-bold text-slate-900 mb-3">Address</h2>
+          <address className="not-italic text-slate-700 leading-relaxed">
             {service.address.street}
             <br />
             {service.address.city}, {service.address.state}{" "}
             {service.address.postalCode}
           </address>
           {service.phone && (
-            <p className="mt-2 text-gray-700">
+            <p className="mt-3 text-slate-700">
               Phone:{" "}
-              <a href={`tel:${service.phone}`} className="text-blue-600">
+              <a href={`tel:${service.phone}`} className="text-[var(--primary)] font-medium">
                 {service.phone}
               </a>
             </p>
           )}
           {service.website && (
-            <p className="mt-1">
+            <p className="mt-2">
               <a
                 href={service.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:underline"
+                className="text-[var(--primary)] font-medium hover:underline"
               >
                 Visit website
               </a>
             </p>
           )}
-        </div>
+        </section>
 
         {/* Hours */}
-        <div className="bg-white rounded-xl p-4 shadow-sm">
-          <h2 className="font-semibold text-gray-900 mb-3">Hours</h2>
-          <div className="space-y-2">
+        <section className="card p-5">
+          <h2 className="font-bold text-slate-900 mb-4">Hours</h2>
+          <div className="space-y-2.5">
             {hoursTable.map((row) => (
               <div
                 key={row.day}
-                className={`flex justify-between py-1 ${
-                  row.isToday ? "font-medium text-blue-600" : "text-gray-700"
+                className={`flex justify-between py-1.5 ${
+                  row.isToday
+                    ? "font-semibold text-[var(--primary)] bg-[var(--primary-light)] px-3 -mx-3 rounded-lg"
+                    : "text-slate-700"
                 }`}
               >
                 <span>{row.dayFull}</span>
@@ -242,19 +248,19 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
         {/* Eligibility */}
-        <div className="bg-white rounded-xl p-4 shadow-sm">
-          <h2 className="font-semibold text-gray-900 mb-3">Who can come</h2>
+        <section className="card p-5">
+          <h2 className="font-bold text-slate-900 mb-3">Who can come</h2>
           {service.eligibility.description && (
-            <p className="text-gray-700 mb-3">{service.eligibility.description}</p>
+            <p className="text-slate-700 mb-4 leading-relaxed">{service.eligibility.description}</p>
           )}
-          <div className="space-y-2 text-sm">
+          <div className="space-y-2.5">
             {service.eligibility.minAge && (
-              <div className="flex gap-2">
-                <span className="text-gray-500">Age:</span>
-                <span className="text-gray-700">
+              <div className="flex gap-3">
+                <span className="text-slate-500 font-medium">Age:</span>
+                <span className="text-slate-700">
                   {service.eligibility.minAge}
                   {service.eligibility.maxAge
                     ? ` - ${service.eligibility.maxAge}`
@@ -265,9 +271,9 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
             )}
             {service.eligibility.genderRestrictions &&
               service.eligibility.genderRestrictions !== "all_genders" && (
-                <div className="flex gap-2">
-                  <span className="text-gray-500">Gender:</span>
-                  <span className="text-gray-700">
+                <div className="flex gap-3">
+                  <span className="text-slate-500 font-medium">Gender:</span>
+                  <span className="text-slate-700">
                     {service.eligibility.genderRestrictions === "women_only"
                       ? "Women only"
                       : "Men only"}
@@ -275,70 +281,61 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
                 </div>
               )}
             {service.eligibility.requiresSobriety && (
-              <div className="flex gap-2 text-yellow-700">
-                <span>⚠️</span>
-                <span>Requires sobriety</span>
+              <div className="flex gap-3 items-center bg-[var(--warning-bg)] text-[var(--warning-text)] px-3 py-2 rounded-lg -mx-1">
+                <span aria-hidden="true">⚠️</span>
+                <span className="font-medium">Requires sobriety</span>
               </div>
             )}
           </div>
-        </div>
+        </section>
 
-        {/* Accessibility */}
-        <div className="bg-white rounded-xl p-4 shadow-sm">
-          <h2 className="font-semibold text-gray-900 mb-3">Accessibility</h2>
+        {/* Accessibility & Features */}
+        <section className="card p-5">
+          <h2 className="font-bold text-slate-900 mb-4">Features</h2>
           <div className="flex flex-wrap gap-2">
             {service.accessibility.wheelchairAccessible && (
-              <span className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full">
-                ♿ Wheelchair accessible
-              </span>
+              <span className="tag tag-feature">Wheelchair OK</span>
             )}
             {service.accessibility.petsAllowed && (
-              <span className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full">
-                🐕 Pets allowed
-              </span>
+              <span className="tag tag-feature">Pets allowed</span>
             )}
             {service.accessibility.serviceAnimalsAllowed && (
-              <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full">
-                🦮 Service animals welcome
-              </span>
+              <span className="tag tag-category">Service animals OK</span>
             )}
             {service.flags.noIDRequired && (
-              <span className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full">
-                ✓ No ID required
-              </span>
+              <span className="tag tag-feature">No ID needed</span>
             )}
             {service.flags.lowBarrier && (
-              <span className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full">
-                ✓ Low barrier
-              </span>
+              <span className="tag tag-feature">Low barrier</span>
             )}
           </div>
           {service.accessibility.languages &&
             service.accessibility.languages.length > 0 && (
-              <p className="mt-3 text-sm text-gray-600">
-                Languages: {service.accessibility.languages.join(", ")}
+              <p className="mt-4 text-sm text-slate-600">
+                <span className="font-medium">Languages:</span>{" "}
+                {service.accessibility.languages.join(", ")}
               </p>
             )}
-        </div>
+        </section>
 
         {/* Notes */}
         {service.notes.length > 0 && (
-          <div className="bg-white rounded-xl p-4 shadow-sm">
-            <h2 className="font-semibold text-gray-900 mb-3">What to know</h2>
-            <ul className="space-y-2">
+          <section className="card p-5">
+            <h2 className="font-bold text-slate-900 mb-4">What to know</h2>
+            <ul className="space-y-3">
               {service.notes.map((note, i) => (
-                <li key={i} className="flex gap-3 text-gray-700">
-                  <span className="text-blue-500 flex-shrink-0">•</span>
+                <li key={i} className="flex gap-3 text-slate-700">
+                  <span className="text-[var(--primary)] flex-shrink-0 font-bold">•</span>
                   <span>{note}</span>
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
         )}
 
         {/* Last verified */}
         {service.lastVerified && (
-          <p className="text-xs text-gray-400 text-center">
+          <p className="text-xs text-slate-400 text-center pt-2">
             Last verified:{" "}
             {new Date(service.lastVerified).toLocaleDateString(undefined, {
               year: "numeric",

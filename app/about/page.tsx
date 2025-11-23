@@ -10,41 +10,42 @@ export default function AboutPage() {
   const config = getConfig();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[var(--background)]">
       {/* Header */}
-      <header className="bg-blue-600 text-white px-4 py-4 safe-area-top">
+      <header className="header safe-area-top sticky top-0 z-40">
         <div className="flex items-center gap-3">
           <Link
             href="/"
-            className="p-2 -ml-2 hover:bg-blue-700 rounded-lg transition-colors"
-            aria-label="Go back"
+            className="flex items-center justify-center w-12 h-12 -ml-2 hover:bg-white/10 active:bg-white/20 rounded-xl transition-colors"
+            aria-label="Go back home"
           >
             <svg
               className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={2.5}
                 d="M15 19l-7-7 7-7"
               />
             </svg>
           </Link>
-          <h1 className="text-lg font-semibold">About StreetConnect</h1>
+          <h1 className="text-lg font-bold">About</h1>
         </div>
       </header>
 
       {/* Main content */}
-      <main className="px-4 py-6 space-y-6 pb-8 safe-area-bottom max-w-2xl mx-auto">
+      <main className="px-5 py-6 space-y-5 safe-area-bottom max-w-2xl mx-auto">
         {/* About section */}
-        <section className="bg-white rounded-xl p-5 shadow-sm">
-          <h2 className="text-xl font-bold text-gray-900 mb-3">
+        <section className="card p-5">
+          <h2 className="text-xl font-bold text-slate-900 mb-3">
             About StreetConnect
           </h2>
-          <div className="space-y-3 text-gray-700">
+          <div className="space-y-3 text-slate-700 leading-relaxed">
             <p>
               StreetConnect helps people find nearby services like shelters, food,
               showers, medical care, and more in {config.cityName}.
@@ -61,71 +62,87 @@ export default function AboutPage() {
         </section>
 
         {/* Location privacy */}
-        <section className="bg-white rounded-xl p-5 shadow-sm">
-          <h2 className="text-xl font-bold text-gray-900 mb-3">
-            How we use your location
+        <section className="card p-5">
+          <h2 className="text-xl font-bold text-slate-900 mb-3">
+            Your privacy
           </h2>
-          <div className="space-y-3 text-gray-700">
+          <div className="space-y-3 text-slate-700 leading-relaxed">
             <p>
               When you share your location, it stays on your device only. We use
-              it to show you the closest services first and calculate distances.
+              it to show you the closest services and calculate distances.
             </p>
-            <p>
-              <strong>We do not:</strong>
-            </p>
-            <ul className="list-disc list-inside space-y-1 ml-2">
-              <li>Store your location on any server</li>
-              <li>Track where you go</li>
-              <li>Share your location with anyone</li>
-              <li>Require location to use the app</li>
+            <p className="font-semibold">We never:</p>
+            <ul className="space-y-2 ml-1">
+              <li className="flex gap-3 items-start">
+                <span className="text-[var(--success)] flex-shrink-0">✓</span>
+                <span>Store your location on any server</span>
+              </li>
+              <li className="flex gap-3 items-start">
+                <span className="text-[var(--success)] flex-shrink-0">✓</span>
+                <span>Track where you go</span>
+              </li>
+              <li className="flex gap-3 items-start">
+                <span className="text-[var(--success)] flex-shrink-0">✓</span>
+                <span>Share your location with anyone</span>
+              </li>
+              <li className="flex gap-3 items-start">
+                <span className="text-[var(--success)] flex-shrink-0">✓</span>
+                <span>Require location to use the app</span>
+              </li>
             </ul>
-            <p>
-              You can change or clear your location at any time by tapping the
-              city name in the header.
+            <p className="text-sm text-slate-500 mt-2">
+              Change your location anytime by tapping the city name in the header.
             </p>
           </div>
         </section>
 
         {/* Disclaimer */}
-        <section className="bg-yellow-50 rounded-xl p-5 border border-yellow-200">
-          <h2 className="text-xl font-bold text-yellow-900 mb-3">
-            Important note
+        <section className="bg-[var(--warning-bg)] rounded-2xl p-5 border-2 border-amber-200">
+          <h2 className="text-xl font-bold text-[var(--warning-text)] mb-3">
+            Important
           </h2>
-          <div className="space-y-3 text-yellow-800">
+          <div className="space-y-3 text-amber-900 leading-relaxed">
             <p>
-              Service information can change without notice. Hours, availability,
-              and eligibility may vary.
+              Service information can change. Hours, availability, and eligibility
+              may vary.
             </p>
-            <p>
-              <strong>We recommend:</strong>
-            </p>
-            <ul className="list-disc list-inside space-y-1 ml-2">
-              <li>Call ahead when possible to confirm availability</li>
-              <li>Arrive early, especially for meals and shelter check-in</li>
-              <li>Bring any required documents or medications</li>
+            <p className="font-semibold">Tips:</p>
+            <ul className="space-y-2 ml-1">
+              <li className="flex gap-3 items-start">
+                <span className="flex-shrink-0">📞</span>
+                <span>Call ahead when possible</span>
+              </li>
+              <li className="flex gap-3 items-start">
+                <span className="flex-shrink-0">⏰</span>
+                <span>Arrive early for meals and shelter check-in</span>
+              </li>
+              <li className="flex gap-3 items-start">
+                <span className="flex-shrink-0">📄</span>
+                <span>Bring ID or documents if you have them</span>
+              </li>
             </ul>
           </div>
         </section>
 
         {/* Feedback */}
-        <section className="bg-white rounded-xl p-5 shadow-sm">
-          <h2 className="text-xl font-bold text-gray-900 mb-3">
+        <section className="card p-5">
+          <h2 className="text-xl font-bold text-slate-900 mb-3">
             Give feedback
           </h2>
-          <div className="space-y-3 text-gray-700">
+          <div className="space-y-4 text-slate-700">
             <p>
-              Found incorrect information? Have a suggestion? We want to hear
-              from you.
+              Found wrong information? Have a suggestion? Let us know.
             </p>
             <a
               href="mailto:feedback@streetconnect.app?subject=StreetConnect Feedback"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 active:bg-blue-800 transition-colors"
+              className="btn btn-primary inline-flex"
             >
               <svg
                 className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -140,8 +157,8 @@ export default function AboutPage() {
         </section>
 
         {/* Version info */}
-        <div className="text-center text-sm text-gray-400 space-y-1">
-          <p>StreetConnect v1.0.0</p>
+        <div className="text-center text-sm text-slate-400 space-y-1 pt-2">
+          <p className="font-medium">StreetConnect v1.0.0</p>
           <p>Serving {config.regionName}</p>
         </div>
       </main>

@@ -6,67 +6,70 @@ interface OnboardingProps {
 
 export function Onboarding({ onComplete }: OnboardingProps) {
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center p-4">
-      <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full max-w-md p-6 animate-slide-up">
+    <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
+      <div className="modal-content p-6 animate-slide-up">
         <div className="text-center">
-          <div className="text-5xl mb-4">🤝</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          {/* Welcoming icon */}
+          <div className="text-5xl mb-4" role="img" aria-hidden="true">
+            🤝
+          </div>
+
+          <h2 id="onboarding-title" className="text-2xl font-bold text-slate-900 mb-2">
             Welcome to StreetConnect
           </h2>
+          <p className="text-slate-600 mb-6">
+            Find nearby help quickly and easily.
+          </p>
 
-          <div className="space-y-4 text-left mb-6">
-            <div className="flex gap-3 items-start">
-              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <span>🔍</span>
+          {/* Features list - simple and clear */}
+          <div className="space-y-4 text-left mb-8">
+            <div className="flex gap-4 items-start">
+              <div className="w-10 h-10 bg-[var(--primary-light)] rounded-xl flex items-center justify-center flex-shrink-0">
+                <span className="text-xl" role="img" aria-hidden="true">🔍</span>
               </div>
-              <p className="text-gray-600">
-                Find food, shelter, showers, and more near you
-              </p>
+              <div>
+                <p className="font-semibold text-slate-800">Find what you need</p>
+                <p className="text-slate-600 text-sm">
+                  Food, shelter, showers, medical care, and more
+                </p>
+              </div>
             </div>
 
-            <div className="flex gap-3 items-start">
-              <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <span>🔒</span>
+            <div className="flex gap-4 items-start">
+              <div className="w-10 h-10 bg-[var(--success-bg)] rounded-xl flex items-center justify-center flex-shrink-0">
+                <span className="text-xl" role="img" aria-hidden="true">🔒</span>
               </div>
-              <p className="text-gray-600">
-                No account needed. We don&apos;t collect your name or personal info
-              </p>
+              <div>
+                <p className="font-semibold text-slate-800">Private and free</p>
+                <p className="text-slate-600 text-sm">
+                  No account needed. No personal info collected.
+                </p>
+              </div>
             </div>
 
-            <div className="flex gap-3 items-start">
-              <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <span>📤</span>
+            <div className="flex gap-4 items-start">
+              <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <span className="text-xl" role="img" aria-hidden="true">📍</span>
               </div>
-              <p className="text-gray-600">
-                Share this app with others using the share button
-              </p>
+              <div>
+                <p className="font-semibold text-slate-800">See what&apos;s close</p>
+                <p className="text-slate-600 text-sm">
+                  Share your location to find nearby services first
+                </p>
+              </div>
             </div>
           </div>
 
+          {/* CTA button */}
           <button
             onClick={onComplete}
-            className="w-full py-4 px-6 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 active:bg-blue-800 transition-colors"
+            className="btn btn-primary w-full text-lg"
+            autoFocus
           >
             Get started
           </button>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes slide-up {
-          from {
-            transform: translateY(100%);
-            opacity: 0;
-          }
-          to {
-            transform: translateY(0);
-            opacity: 1;
-          }
-        }
-        .animate-slide-up {
-          animation: slide-up 0.3s ease-out;
-        }
-      `}</style>
     </div>
   );
 }

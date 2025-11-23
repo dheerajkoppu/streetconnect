@@ -21,63 +21,69 @@ export function FilterBar({
   };
 
   return (
-    <div className="space-y-3">
-      {/* Main filters row */}
+    <div className="space-y-3" role="group" aria-label="Filter options">
+      {/* Primary filters row */}
       <div className="flex flex-wrap gap-2">
-        {/* Open Now toggle */}
+        {/* Open Now toggle - most important filter */}
         <button
           onClick={() => updateFilter("openNow", !filters.openNow)}
-          className={`
-            px-4 py-2 rounded-full text-sm font-medium
-            transition-colors duration-150
-            ${
-              filters.openNow
-                ? "bg-green-600 text-white"
-                : "bg-white text-gray-700 border border-gray-300"
-            }
-          `}
+          className={`filter-chip ${filters.openNow ? "filter-chip-active" : "filter-chip-inactive"}`}
+          aria-pressed={filters.openNow}
         >
-          {filters.openNow ? "✓ Open now" : "Open now"}
+          {filters.openNow && (
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+            </svg>
+          )}
+          Open now
         </button>
 
         {/* Distance selector - only show if we have location */}
         {hasLocation && (
-          <select
-            value={filters.maxDistance}
-            onChange={(e) =>
-              updateFilter(
-                "maxDistance",
-                e.target.value as FilterState["maxDistance"]
-              )
-            }
-            className="px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-700 border border-gray-300"
-          >
-            <option value="all">Any distance</option>
-            <option value="near">Near (0-2 km)</option>
-            <option value="medium">Medium (2-5 km)</option>
-            <option value="far">Far (5+ km)</option>
-          </select>
+          <div className="relative">
+            <select
+              value={filters.maxDistance}
+              onChange={(e) =>
+                updateFilter(
+                  "maxDistance",
+                  e.target.value as FilterState["maxDistance"]
+                )
+              }
+              className="filter-chip filter-chip-inactive appearance-none pr-8 cursor-pointer"
+              aria-label="Filter by distance"
+            >
+              <option value="all">Any distance</option>
+              <option value="near">Walking (0-2 km)</option>
+              <option value="medium">Nearby (2-5 km)</option>
+              <option value="far">Further (5+ km)</option>
+            </select>
+            <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+              <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         )}
       </div>
 
-      {/* Additional filters */}
+      {/* Accessibility filters */}
       <div className="flex flex-wrap gap-2">
         <FilterChip
-          label="Pets OK"
-          active={filters.petsAllowed}
-          onClick={() => updateFilter("petsAllowed", !filters.petsAllowed)}
+          label="No ID needed"
+          active={filters.noIDRequired}
+          onClick={() => updateFilter("noIDRequired", !filters.noIDRequired)}
         />
         <FilterChip
-          label="Wheelchair"
+          label="Wheelchair OK"
           active={filters.wheelchairAccessible}
           onClick={() =>
             updateFilter("wheelchairAccessible", !filters.wheelchairAccessible)
           }
         />
         <FilterChip
-          label="No ID needed"
-          active={filters.noIDRequired}
-          onClick={() => updateFilter("noIDRequired", !filters.noIDRequired)}
+          label="Pets OK"
+          active={filters.petsAllowed}
+          onClick={() => updateFilter("petsAllowed", !filters.petsAllowed)}
         />
       </div>
     </div>
@@ -96,17 +102,14 @@ function FilterChip({
   return (
     <button
       onClick={onClick}
-      className={`
-        px-3 py-1.5 rounded-full text-xs font-medium
-        transition-colors duration-150
-        ${
-          active
-            ? "bg-blue-100 text-blue-700 border border-blue-300"
-            : "bg-gray-100 text-gray-600 border border-gray-200"
-        }
-      `}
+      className={`filter-chip ${active ? "filter-chip-active" : "filter-chip-inactive"}`}
+      aria-pressed={active}
     >
-      {active && "✓ "}
+      {active && (
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+        </svg>
+      )}
       {label}
     </button>
   );
