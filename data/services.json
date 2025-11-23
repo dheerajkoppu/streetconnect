@@ -1,0 +1,522 @@
+[
+  {
+    "id": "union-rescue-mission",
+    "name": "Union Rescue Mission",
+    "categories": ["shelter", "food", "showers"],
+    "descriptionShort": "Emergency shelter with meals, showers, and supportive services for men, women, and families.",
+    "descriptionLong": "Union Rescue Mission provides comprehensive services including emergency shelter, three meals daily, showers, clothing, and case management. They offer programs for recovery, job training, and long-term housing assistance.",
+    "phone": "(213) 347-6300",
+    "website": "https://urm.org",
+    "address": {
+      "street": "545 S San Pedro St",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90013",
+      "lat": 34.0422,
+      "lng": -118.2447
+    },
+    "hours": {
+      "monday": { "open": "00:00", "close": "23:59" },
+      "tuesday": { "open": "00:00", "close": "23:59" },
+      "wednesday": { "open": "00:00", "close": "23:59" },
+      "thursday": { "open": "00:00", "close": "23:59" },
+      "friday": { "open": "00:00", "close": "23:59" },
+      "saturday": { "open": "00:00", "close": "23:59" },
+      "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "eligibility": {
+      "genderRestrictions": "all_genders",
+      "familiesAllowed": true,
+      "singlesAllowed": true,
+      "lgbtqFriendly": true,
+      "requiresID": false,
+      "requiresSobriety": false,
+      "description": "Open to all adults and families. No ID required for emergency shelter."
+    },
+    "accessibility": {
+      "wheelchairAccessible": true,
+      "petsAllowed": false,
+      "serviceAnimalsAllowed": true,
+      "languages": ["English", "Spanish"]
+    },
+    "flags": {
+      "noIDRequired": true,
+      "lowBarrier": true
+    },
+    "notes": [
+      "Check-in starts at 4:00 PM for overnight shelter",
+      "Meals served at 7 AM, 12 PM, and 5 PM",
+      "Bring any medications you need",
+      "Service animals welcome, pets not allowed"
+    ],
+    "lastVerified": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "midnight-mission",
+    "name": "Midnight Mission",
+    "categories": ["shelter", "food", "showers", "laundry"],
+    "descriptionShort": "24-hour emergency services with meals, shelter beds, and recovery programs.",
+    "descriptionLong": "The Midnight Mission offers 24-hour emergency services including shelter, meals, and hygiene facilities. They provide comprehensive recovery programs, job training, and transitional housing for those working toward independence.",
+    "phone": "(213) 624-9258",
+    "website": "https://midnightmission.org",
+    "address": {
+      "street": "601 S San Pedro St",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90014",
+      "lat": 34.0408,
+      "lng": -118.2445
+    },
+    "hours": {
+      "monday": { "open": "00:00", "close": "23:59" },
+      "tuesday": { "open": "00:00", "close": "23:59" },
+      "wednesday": { "open": "00:00", "close": "23:59" },
+      "thursday": { "open": "00:00", "close": "23:59" },
+      "friday": { "open": "00:00", "close": "23:59" },
+      "saturday": { "open": "00:00", "close": "23:59" },
+      "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "eligibility": {
+      "minAge": 18,
+      "genderRestrictions": "all_genders",
+      "familiesAllowed": false,
+      "singlesAllowed": true,
+      "lgbtqFriendly": true,
+      "requiresID": false,
+      "requiresSobriety": false,
+      "description": "Adults 18+ only. Singles only, no families."
+    },
+    "accessibility": {
+      "wheelchairAccessible": true,
+      "petsAllowed": false,
+      "serviceAnimalsAllowed": true,
+      "languages": ["English", "Spanish"]
+    },
+    "flags": {
+      "noIDRequired": true,
+      "lowBarrier": true
+    },
+    "notes": [
+      "Walk-ins welcome 24/7",
+      "Three hot meals served daily",
+      "Laundry services available",
+      "Recovery programs require intake appointment"
+    ],
+    "lastVerified": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "lamp-community",
+    "name": "LAMP Community",
+    "categories": ["day_center", "food", "showers", "laundry"],
+    "descriptionShort": "Drop-in day center with meals, showers, laundry, and case management.",
+    "descriptionLong": "LAMP Community provides a safe daytime space for people experiencing homelessness. Services include hot meals, showers, laundry facilities, mail service, and access to case managers who can help with housing and benefits.",
+    "phone": "(213) 488-0031",
+    "website": "https://www.lampcommunity.org",
+    "address": {
+      "street": "527 Crocker St",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90013",
+      "lat": 34.0465,
+      "lng": -118.2455
+    },
+    "hours": {
+      "monday": { "open": "07:00", "close": "15:00" },
+      "tuesday": { "open": "07:00", "close": "15:00" },
+      "wednesday": { "open": "07:00", "close": "15:00" },
+      "thursday": { "open": "07:00", "close": "15:00" },
+      "friday": { "open": "07:00", "close": "15:00" },
+      "saturday": { "open": null, "close": null },
+      "sunday": { "open": null, "close": null }
+    },
+    "eligibility": {
+      "minAge": 18,
+      "genderRestrictions": "all_genders",
+      "familiesAllowed": false,
+      "singlesAllowed": true,
+      "lgbtqFriendly": true,
+      "requiresID": false,
+      "requiresSobriety": false,
+      "description": "Adults 18+ only. No ID required."
+    },
+    "accessibility": {
+      "wheelchairAccessible": true,
+      "petsAllowed": true,
+      "serviceAnimalsAllowed": true,
+      "languages": ["English", "Spanish"]
+    },
+    "flags": {
+      "noIDRequired": true,
+      "lowBarrier": true
+    },
+    "notes": [
+      "Arrive early for shower slots",
+      "Mail service available for guests",
+      "Pets welcome",
+      "Case managers available Mon-Fri"
+    ],
+    "lastVerified": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "saban-community-clinic",
+    "name": "Saban Community Clinic",
+    "categories": ["medical", "mental_health"],
+    "descriptionShort": "Free and low-cost medical care including mental health services.",
+    "descriptionLong": "Saban Community Clinic provides comprehensive healthcare services regardless of ability to pay. Services include primary care, dental, vision, mental health counseling, and HIV/STI testing. Sliding scale fees available.",
+    "phone": "(323) 653-1990",
+    "website": "https://www.sabancommunityclinic.org",
+    "address": {
+      "street": "8405 Beverly Blvd",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90048",
+      "lat": 34.0762,
+      "lng": -118.3706
+    },
+    "hours": {
+      "monday": { "open": "08:00", "close": "17:00" },
+      "tuesday": { "open": "08:00", "close": "17:00" },
+      "wednesday": { "open": "08:00", "close": "17:00" },
+      "thursday": { "open": "08:00", "close": "17:00" },
+      "friday": { "open": "08:00", "close": "17:00" },
+      "saturday": { "open": "09:00", "close": "13:00" },
+      "sunday": { "open": null, "close": null }
+    },
+    "eligibility": {
+      "genderRestrictions": "all_genders",
+      "familiesAllowed": true,
+      "singlesAllowed": true,
+      "lgbtqFriendly": true,
+      "requiresID": false,
+      "requiresSobriety": false,
+      "description": "All ages welcome. Insurance accepted but not required. Sliding scale fees."
+    },
+    "accessibility": {
+      "wheelchairAccessible": true,
+      "petsAllowed": false,
+      "serviceAnimalsAllowed": true,
+      "languages": ["English", "Spanish", "Russian", "Armenian"]
+    },
+    "flags": {
+      "noIDRequired": true
+    },
+    "notes": [
+      "Walk-ins accepted but appointments preferred",
+      "Call to schedule mental health intake",
+      "Bring any insurance cards if you have them",
+      "Translation services available"
+    ],
+    "lastVerified": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "los-angeles-food-bank-skid-row",
+    "name": "LA Regional Food Bank - Skid Row",
+    "categories": ["food"],
+    "descriptionShort": "Free grocery distribution every Thursday morning.",
+    "descriptionLong": "Weekly food distribution providing free groceries including fresh produce, canned goods, bread, and other essentials. No documentation or proof of income required.",
+    "phone": "(323) 234-3030",
+    "website": "https://www.lafoodbank.org",
+    "address": {
+      "street": "630 E 6th St",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90021",
+      "lat": 34.0427,
+      "lng": -118.2389
+    },
+    "hours": {
+      "monday": { "open": null, "close": null },
+      "tuesday": { "open": null, "close": null },
+      "wednesday": { "open": null, "close": null },
+      "thursday": { "open": "09:00", "close": "12:00" },
+      "friday": { "open": null, "close": null },
+      "saturday": { "open": null, "close": null },
+      "sunday": { "open": null, "close": null }
+    },
+    "eligibility": {
+      "genderRestrictions": "all_genders",
+      "familiesAllowed": true,
+      "singlesAllowed": true,
+      "requiresID": false,
+      "description": "Open to all. No ID or proof of income needed."
+    },
+    "accessibility": {
+      "wheelchairAccessible": true,
+      "petsAllowed": true,
+      "serviceAnimalsAllowed": true,
+      "languages": ["English", "Spanish"]
+    },
+    "flags": {
+      "noIDRequired": true,
+      "lowBarrier": true
+    },
+    "notes": [
+      "Thursdays only, 9 AM - 12 PM",
+      "Bring your own bags if possible",
+      "First come, first served",
+      "Line forms early"
+    ],
+    "lastVerified": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "lafh-winter-shelter",
+    "name": "LA Family Housing Winter Shelter",
+    "categories": ["shelter"],
+    "descriptionShort": "Seasonal emergency shelter for families with children.",
+    "descriptionLong": "LA Family Housing operates seasonal winter shelters providing safe overnight accommodation for families with children. Includes dinner and breakfast, case management, and connections to permanent housing resources.",
+    "phone": "(818) 982-4091",
+    "website": "https://lafh.org",
+    "address": {
+      "street": "7843 Lankershim Blvd",
+      "city": "North Hollywood",
+      "state": "CA",
+      "postalCode": "91605",
+      "lat": 34.2066,
+      "lng": -118.3887
+    },
+    "hours": {
+      "monday": { "open": "17:00", "close": "07:00" },
+      "tuesday": { "open": "17:00", "close": "07:00" },
+      "wednesday": { "open": "17:00", "close": "07:00" },
+      "thursday": { "open": "17:00", "close": "07:00" },
+      "friday": { "open": "17:00", "close": "07:00" },
+      "saturday": { "open": "17:00", "close": "07:00" },
+      "sunday": { "open": "17:00", "close": "07:00" }
+    },
+    "eligibility": {
+      "genderRestrictions": "all_genders",
+      "familiesAllowed": true,
+      "singlesAllowed": false,
+      "requiresID": false,
+      "requiresSobriety": true,
+      "description": "Families with minor children only. Must be sober."
+    },
+    "accessibility": {
+      "wheelchairAccessible": true,
+      "petsAllowed": false,
+      "serviceAnimalsAllowed": true,
+      "languages": ["English", "Spanish"]
+    },
+    "flags": {
+      "noIDRequired": true
+    },
+    "notes": [
+      "Families only - must have at least one child under 18",
+      "Check-in between 5-7 PM",
+      "Dinner provided at 6 PM",
+      "Seasonal operation: November through March"
+    ],
+    "lastVerified": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "covenant-house-california",
+    "name": "Covenant House California",
+    "categories": ["shelter", "food", "showers"],
+    "descriptionShort": "Emergency shelter and services for youth ages 18-24.",
+    "descriptionLong": "Covenant House provides emergency shelter, food, clothing, and comprehensive services specifically for young people ages 18-24 experiencing homelessness. Includes case management, education support, and job training.",
+    "phone": "(323) 461-3131",
+    "website": "https://covenanthousecalifornia.org",
+    "address": {
+      "street": "1325 N Western Ave",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90027",
+      "lat": 34.0958,
+      "lng": -118.3094
+    },
+    "hours": {
+      "monday": { "open": "00:00", "close": "23:59" },
+      "tuesday": { "open": "00:00", "close": "23:59" },
+      "wednesday": { "open": "00:00", "close": "23:59" },
+      "thursday": { "open": "00:00", "close": "23:59" },
+      "friday": { "open": "00:00", "close": "23:59" },
+      "saturday": { "open": "00:00", "close": "23:59" },
+      "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "eligibility": {
+      "minAge": 18,
+      "maxAge": 24,
+      "genderRestrictions": "all_genders",
+      "familiesAllowed": false,
+      "singlesAllowed": true,
+      "lgbtqFriendly": true,
+      "requiresID": false,
+      "requiresSobriety": false,
+      "description": "Youth ages 18-24 only. LGBTQ+ affirming."
+    },
+    "accessibility": {
+      "wheelchairAccessible": true,
+      "petsAllowed": false,
+      "serviceAnimalsAllowed": true,
+      "languages": ["English", "Spanish"]
+    },
+    "flags": {
+      "noIDRequired": true,
+      "lowBarrier": true,
+      "youthFocused": true
+    },
+    "notes": [
+      "For young adults ages 18-24 only",
+      "24-hour intake available",
+      "No appointment needed",
+      "LGBTQ+ safe space"
+    ],
+    "lastVerified": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "weingart-center",
+    "name": "Weingart Center",
+    "categories": ["shelter", "food", "medical", "mental_health"],
+    "descriptionShort": "Comprehensive emergency shelter with on-site medical and mental health services.",
+    "descriptionLong": "The Weingart Center offers emergency shelter along with on-site medical clinic, mental health services, substance abuse treatment, and employment assistance. Long-term transitional housing programs also available.",
+    "phone": "(213) 689-2155",
+    "website": "https://weingart.org",
+    "address": {
+      "street": "566 S San Pedro St",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90013",
+      "lat": 34.0418,
+      "lng": -118.2452
+    },
+    "hours": {
+      "monday": { "open": "00:00", "close": "23:59" },
+      "tuesday": { "open": "00:00", "close": "23:59" },
+      "wednesday": { "open": "00:00", "close": "23:59" },
+      "thursday": { "open": "00:00", "close": "23:59" },
+      "friday": { "open": "00:00", "close": "23:59" },
+      "saturday": { "open": "00:00", "close": "23:59" },
+      "sunday": { "open": "00:00", "close": "23:59" }
+    },
+    "eligibility": {
+      "minAge": 18,
+      "genderRestrictions": "all_genders",
+      "familiesAllowed": false,
+      "singlesAllowed": true,
+      "lgbtqFriendly": true,
+      "requiresID": false,
+      "requiresSobriety": false,
+      "description": "Adults 18+ only. Intake required for longer stays."
+    },
+    "accessibility": {
+      "wheelchairAccessible": true,
+      "petsAllowed": false,
+      "serviceAnimalsAllowed": true,
+      "languages": ["English", "Spanish"]
+    },
+    "flags": {
+      "noIDRequired": true,
+      "lowBarrier": true
+    },
+    "notes": [
+      "Emergency shelter intake: 4-7 PM daily",
+      "Medical clinic hours: 8 AM - 4 PM weekdays",
+      "Mental health services by appointment",
+      "Job training programs available"
+    ],
+    "lastVerified": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "bet-tzedek-legal",
+    "name": "Bet Tzedek Legal Services",
+    "categories": ["id_legal"],
+    "descriptionShort": "Free legal help for low-income individuals including ID restoration and benefits appeals.",
+    "descriptionLong": "Bet Tzedek provides free legal services including help obtaining birth certificates and IDs, benefits appeals, housing rights assistance, and immigration help. Serves low-income individuals regardless of immigration status.",
+    "phone": "(323) 939-0506",
+    "website": "https://www.bettzedek.org",
+    "address": {
+      "street": "3250 Wilshire Blvd Suite 1300",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90010",
+      "lat": 34.0617,
+      "lng": -118.2982
+    },
+    "hours": {
+      "monday": { "open": "09:00", "close": "17:00" },
+      "tuesday": { "open": "09:00", "close": "17:00" },
+      "wednesday": { "open": "09:00", "close": "17:00" },
+      "thursday": { "open": "09:00", "close": "17:00" },
+      "friday": { "open": "09:00", "close": "17:00" },
+      "saturday": { "open": null, "close": null },
+      "sunday": { "open": null, "close": null }
+    },
+    "eligibility": {
+      "genderRestrictions": "all_genders",
+      "familiesAllowed": true,
+      "singlesAllowed": true,
+      "lgbtqFriendly": true,
+      "requiresID": false,
+      "description": "Low-income individuals. All immigration statuses welcome."
+    },
+    "accessibility": {
+      "wheelchairAccessible": true,
+      "petsAllowed": false,
+      "serviceAnimalsAllowed": true,
+      "languages": ["English", "Spanish", "Korean", "Mandarin", "Russian"]
+    },
+    "flags": {
+      "noIDRequired": true
+    },
+    "notes": [
+      "Call to schedule an appointment",
+      "Bring any documents you have",
+      "Free services, income verification required",
+      "Help with birth certificates and CA ID"
+    ],
+    "lastVerified": "2024-12-01T00:00:00Z"
+  },
+  {
+    "id": "downtown-womens-center",
+    "name": "Downtown Women's Center",
+    "categories": ["day_center", "shelter", "food", "showers"],
+    "descriptionShort": "Day center and shelter services exclusively for women.",
+    "descriptionLong": "The Downtown Women's Center provides a safe space exclusively for women experiencing homelessness. Services include day center access, meals, showers, health services, and permanent supportive housing programs.",
+    "phone": "(213) 680-0600",
+    "website": "https://downtownwomenscenter.org",
+    "address": {
+      "street": "442 S San Pedro St",
+      "city": "Los Angeles",
+      "state": "CA",
+      "postalCode": "90013",
+      "lat": 34.0445,
+      "lng": -118.2442
+    },
+    "hours": {
+      "monday": { "open": "06:00", "close": "18:00" },
+      "tuesday": { "open": "06:00", "close": "18:00" },
+      "wednesday": { "open": "06:00", "close": "18:00" },
+      "thursday": { "open": "06:00", "close": "18:00" },
+      "friday": { "open": "06:00", "close": "18:00" },
+      "saturday": { "open": "06:00", "close": "18:00" },
+      "sunday": { "open": "06:00", "close": "18:00" }
+    },
+    "eligibility": {
+      "minAge": 18,
+      "genderRestrictions": "women_only",
+      "familiesAllowed": false,
+      "singlesAllowed": true,
+      "lgbtqFriendly": true,
+      "requiresID": false,
+      "requiresSobriety": false,
+      "description": "Women 18+ only. Trans women welcome."
+    },
+    "accessibility": {
+      "wheelchairAccessible": true,
+      "petsAllowed": false,
+      "serviceAnimalsAllowed": true,
+      "languages": ["English", "Spanish"]
+    },
+    "flags": {
+      "noIDRequired": true,
+      "lowBarrier": true
+    },
+    "notes": [
+      "Women only - safe space",
+      "Trans women welcome",
+      "Day center open 6 AM - 6 PM",
+      "Hot meals served at breakfast and lunch"
+    ],
+    "lastVerified": "2024-12-01T00:00:00Z"
+  }
+]

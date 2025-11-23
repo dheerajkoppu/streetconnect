@@ -1,0 +1,9 @@
+{
+  "cityName": "Los Angeles",
+  "regionName": "Los Angeles County",
+  "defaultCenter": {
+    "lat": 34.0522,
+    "lng": -118.2437
+  },
+  "defaultRadiusKm": 10
+}
