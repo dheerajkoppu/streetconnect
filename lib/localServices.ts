@@ -57,7 +57,8 @@ interface OverpassElement {
 export async function fetchLocalServices(
   lat: number,
   lng: number,
-  radiusMeters: number = 5000
+  radiusMeters: number = 5000,
+  locationInfo?: { city: string; state: string }
 ): Promise<Service[]> {
   const amenityFilter = AMENITY_TYPES.map(
     (type) => `node["amenity"="${type}"](around:${radiusMeters},${lat},${lng});`
@@ -88,7 +89,7 @@ export async function fetchLocalServices(
     }
 
     const data = await response.json();
-    return parseOverpassResults(data.elements || []);
+    return parseOverpassResults(data.elements || [], locationInfo);
   } catch (error) {
     console.error("Failed to fetch local services:", error);
     return [];
@@ -98,7 +99,10 @@ export async function fetchLocalServices(
 /**
  * Parse Overpass API results into our Service format
  */
-function parseOverpassResults(elements: OverpassElement[]): Service[] {
+function parseOverpassResults(
+  elements: OverpassElement[],
+  locationInfo?: { city: string; state: string }
+): Service[] {
   const services: Service[] = [];
 
   for (const el of elements) {
@@ -120,8 +124,8 @@ function parseOverpassResults(elements: OverpassElement[]): Service[] {
       website: el.tags.website,
       address: {
         street: el.tags["addr:street"] || "Address not available",
-        city: el.tags["addr:city"] || "",
-        state: el.tags["addr:state"] || "",
+        city: el.tags["addr:city"] || locationInfo?.city || "",
+        state: el.tags["addr:state"] || locationInfo?.state || "",
         postalCode: el.tags["addr:postcode"] || "",
         lat,
         lng: lon,
