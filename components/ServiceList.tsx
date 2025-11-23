@@ -16,9 +16,9 @@ export function ServiceList({
 }: ServiceListProps) {
   if (isLoading) {
     return (
-      <div className="space-y-4" aria-label="Loading services">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" aria-label="Loading services">
         {/* Loading skeleton cards */}
-        {[1, 2, 3].map((i) => (
+        {[1, 2, 3, 4, 5, 6].map((i) => (
           <div key={i} className="card-elevated p-5 space-y-4" aria-hidden="true">
             {/* Title and distance row */}
             <div className="flex justify-between items-start gap-4">
@@ -71,8 +71,8 @@ export function ServiceList({
         </p>
       </div>
 
-      {/* Service cards */}
-      <div className="space-y-4">
+      {/* Service cards - responsive grid on larger screens */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {services.map((service) => (
           <ServiceCard
             key={service.id}

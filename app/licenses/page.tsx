@@ -45,7 +45,7 @@ export default function LicensesPage() {
     <div className="min-h-screen bg-[var(--bg-base)] flex flex-col">
       {/* Header */}
       <header className="header-gradient safe-area-top sticky top-0 z-40">
-        <div className="px-5 py-4 flex items-center gap-4">
+        <div className="max-w-[420px] md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-5 md:px-8 py-4 flex items-center gap-4">
           <Link
             href="/"
             className="flex items-center justify-center w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 transition-colors"
@@ -70,12 +70,13 @@ export default function LicensesPage() {
       </header>
 
       {/* Content */}
-      <main className="flex-1 max-w-[420px] mx-auto px-5 py-6 w-full">
+      <main className="flex-1 max-w-[420px] md:max-w-3xl lg:max-w-4xl mx-auto px-5 md:px-8 py-6 w-full">
         <div className="space-y-4">
           <p className="text-sm text-[var(--text-secondary)] leading-relaxed px-1">
             StreetConnect is built with open source software. We&apos;re grateful to the developers and communities behind these projects.
           </p>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {licenses.map((item, index) => (
             <div key={index} className="card-elevated p-4">
               <div className="flex items-start justify-between gap-3">
@@ -114,8 +115,9 @@ export default function LicensesPage() {
               </div>
             </div>
           ))}
+          </div>
 
-          <div className="card-elevated p-4 bg-[var(--primary-50)]">
+          <div className="card-elevated p-4 bg-[var(--primary-50)] md:col-span-2 lg:col-span-3">
             <h3 className="font-semibold text-[var(--text-primary)] mb-2">
               StreetConnect
             </h3>

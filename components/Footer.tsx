@@ -3,7 +3,7 @@ import Link from "next/link";
 export function Footer() {
   return (
     <footer className="header-gradient text-white mt-auto">
-      <div className="max-w-[420px] mx-auto px-5 py-8">
+      <div className="max-w-[420px] md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-5 md:px-8 py-8">
         {/* Navigation links */}
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-6">
           <Link
