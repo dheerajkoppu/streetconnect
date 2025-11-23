@@ -5,9 +5,10 @@ import Link from "next/link";
 interface HeaderProps {
   cityName: string;
   onLocationChange?: () => void;
+  onAddLocation?: () => void;
 }
 
-export function Header({ cityName, onLocationChange }: HeaderProps) {
+export function Header({ cityName, onLocationChange, onAddLocation }: HeaderProps) {
   return (
     <header className="header-gradient safe-area-top sticky top-0 z-40">
       {/* Main header content */}
@@ -21,27 +22,52 @@ export function Header({ cityName, onLocationChange }: HeaderProps) {
             </h1>
           </div>
 
-          {/* Right: Info button */}
-          <Link
-            href="/about"
-            className="flex items-center justify-center w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 active:bg-white/30 transition-colors shadow-sm"
-            aria-label="About and settings"
-          >
-            <svg
-              className="w-5 h-5 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
+          {/* Right: Action buttons */}
+          <div className="flex items-center gap-2">
+            {/* Add Location button */}
+            <button
+              onClick={onAddLocation}
+              className="flex items-center justify-center w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 active:bg-white/30 transition-colors shadow-sm"
+              aria-label="Add new location"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </Link>
+              <svg
+                className="w-5 h-5 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+            </button>
+
+            {/* Info button */}
+            <Link
+              href="/about"
+              className="flex items-center justify-center w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 active:bg-white/30 transition-colors shadow-sm"
+              aria-label="About and settings"
+            >
+              <svg
+                className="w-5 h-5 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </Link>
+          </div>
         </div>
 
         {/* City selector pill */}
