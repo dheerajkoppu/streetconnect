@@ -119,3 +119,30 @@ export interface CategoryInfo {
   icon: string;
   color: string;
 }
+
+// Chat message types
+export interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: number;
+}
+
+// Chat context - read-only information passed to the AI
+export interface ChatContext {
+  cityName: string;
+  regionName: string;
+  selectedCategory: ServiceCategory | null;
+  filters: FilterState;
+  visibleServices: Service[];
+  selectedService: Service | null;
+}
+
+// Chat state for the provider
+export interface ChatState {
+  messages: ChatMessage[];
+  isOpen: boolean;
+  isLoading: boolean;
+  error: string | null;
+  context: ChatContext;
+}
