@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { Service, ServiceCategory, FilterState, UserLocation } from "@/types";
 import { getServices, getConfig } from "@/lib/data";
 import { loadUserLocation, clearUserLocation } from "@/lib/location";
@@ -126,19 +126,26 @@ export default function HomePage() {
     setShowLocationPrompt(true);
   }, []);
 
-  // Filter and sort services
-  const filteredServices = filterServices(
-    services,
-    filters,
-    selectedCategory,
-    userLocation ? { lat: userLocation.lat, lng: userLocation.lng } : null,
-    searchQuery
+  // Memoize user location coords to avoid recalculating on every render
+  const userCoords = useMemo(
+    () => (userLocation ? { lat: userLocation.lat, lng: userLocation.lng } : null),
+    [userLocation?.lat, userLocation?.lng]
   );
 
-  const sortedServices = sortServices(
-    filteredServices,
-    userLocation ? { lat: userLocation.lat, lng: userLocation.lng } : null
-  );
+  // Filter and sort services (memoized to prevent infinite loops)
+  const sortedServices = useMemo(() => {
+    const filtered = filterServices(
+      services,
+      filters,
+      selectedCategory,
+      userCoords,
+      searchQuery
+    );
+    return sortServices(filtered, userCoords);
+  }, [services, filters, selectedCategory, userCoords, searchQuery]);
+
+  // Track previous service IDs to avoid unnecessary updates
+  const prevServiceIdsRef = useRef<string>("");
 
   // Update chat context when relevant state changes
   useEffect(() => {
@@ -153,14 +160,20 @@ export default function HomePage() {
     setChatFilters(filters);
   }, [filters, setChatFilters]);
 
+  // Only update visible services when the actual service list changes
   useEffect(() => {
-    setVisibleServices(sortedServices);
+    const serviceIds = sortedServices.map(s => s.id).join(",");
+    if (serviceIds !== prevServiceIdsRef.current) {
+      prevServiceIdsRef.current = serviceIds;
+      setVisibleServices(sortedServices);
+    }
   }, [sortedServices, setVisibleServices]);
 
-  // Clear selected service on home page
+  // Clear selected service on home page (only on mount)
   useEffect(() => {
     setSelectedService(null);
-  }, [setSelectedService]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -208,11 +221,7 @@ export default function HomePage() {
             {/* Service list */}
             <ServiceList
               services={sortedServices}
-              userLocation={
-                userLocation
-                  ? { lat: userLocation.lat, lng: userLocation.lng }
-                  : null
-              }
+              userLocation={userCoords}
               isLoading={isLoading}
             />
           </>

@@ -5,6 +5,7 @@ import {
   useContext,
   useState,
   useCallback,
+  useMemo,
   ReactNode,
 } from "react";
 import {
@@ -230,15 +231,42 @@ export function useChat() {
 // Helper hook for components to update context
 export function useChatContext() {
   const { updateContext } = useChat();
-  return {
-    setCity: (cityName: string, regionName: string) =>
+
+  const setCity = useCallback(
+    (cityName: string, regionName: string) =>
       updateContext({ cityName, regionName }),
-    setCategory: (selectedCategory: ServiceCategory | null) =>
+    [updateContext]
+  );
+
+  const setCategory = useCallback(
+    (selectedCategory: ServiceCategory | null) =>
       updateContext({ selectedCategory }),
-    setFilters: (filters: FilterState) => updateContext({ filters }),
-    setVisibleServices: (visibleServices: Service[]) =>
-      updateContext({ visibleServices }),
-    setSelectedService: (selectedService: Service | null) =>
-      updateContext({ selectedService }),
-  };
+    [updateContext]
+  );
+
+  const setFilters = useCallback(
+    (filters: FilterState) => updateContext({ filters }),
+    [updateContext]
+  );
+
+  const setVisibleServices = useCallback(
+    (visibleServices: Service[]) => updateContext({ visibleServices }),
+    [updateContext]
+  );
+
+  const setSelectedService = useCallback(
+    (selectedService: Service | null) => updateContext({ selectedService }),
+    [updateContext]
+  );
+
+  return useMemo(
+    () => ({
+      setCity,
+      setCategory,
+      setFilters,
+      setVisibleServices,
+      setSelectedService,
+    }),
+    [setCity, setCategory, setFilters, setVisibleServices, setSelectedService]
+  );
 }
