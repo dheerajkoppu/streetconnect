@@ -717,7 +717,7 @@ select,
 
 .chat-fab {
   position: fixed;
-  bottom: calc(80px + env(safe-area-inset-bottom, 0px)); /* Moved higher to avoid bottom bar */
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
   right: 16px;
   display: flex;
   align-items: center;
@@ -752,7 +752,7 @@ select,
 
 .chat-bottom-sheet {
   position: fixed;
-  bottom: 60px; /* Moved up to avoid bottom bar */
+  bottom: 40px;
   left: 0;
   right: 0;
   height: 65vh; /* Slightly reduced height */
