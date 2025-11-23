@@ -92,15 +92,6 @@ export function Header({ cityName, onLocationChange }: HeaderProps) {
           Find shelter, food, and help near you today.
         </p>
       </div>
-
-      {/* Subtle bottom curve overlay for depth */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-4 bg-[var(--bg-base)]"
-        style={{
-          borderRadius: '20px 20px 0 0',
-          marginBottom: '-1px'
-        }}
-      />
     </header>
   );
 }
