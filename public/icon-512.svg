@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background - Rounded rectangle -->
+  <rect width="512" height="512" rx="96" fill="#f0f4f8"/>
+
+  <!-- Location Pin - Primary Blue -->
+  <path d="M256 48c-82.8 0-150 67.2-150 150 0 112 140 260 146 267a6 6 0 0 0 8 0c6-7 146-155 146-267 0-82.8-67.2-150-150-150z" fill="#2563eb"/>
+
+  <!-- Inner Circle - White background for heart -->
+  <circle cx="256" cy="198" r="96" fill="white"/>
+
+  <!-- Heart - Accent Amber -->
+  <path d="M256 274c-3.2 0-6.4-1.2-8.8-3.2C207.6 236.4 182 214 182 180c0-21.6 16.4-39 36-39 10.8 0 21.2 5.8 29.2 15 8-9.2 18.4-15 29.2-15 19.6 0 36 17.4 36 39 0 34-25.6 56.4-65.2 90.8-2.4 2-5.6 3.2-8.8 3.2z" fill="#f59e0b"/>
+</svg>
