@@ -23,7 +23,7 @@ export function CategorySelector({
 
       {/* Horizontal scrollable tab strip */}
       <div
-        className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar -mx-5 px-5 snap-x snap-mandatory"
+        className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar snap-x snap-mandatory"
         role="tablist"
         aria-label="Service categories"
       >

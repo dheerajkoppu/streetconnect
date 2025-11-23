@@ -721,11 +721,14 @@ select,
   right: 16px;
   display: flex;
   align-items: center;
-  padding: 12px 20px;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
   background: var(--interactive-primary);
   color: white;
   border: none;
-  border-radius: var(--radius-full);
+  border-radius: 50%;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
   cursor: pointer;
   z-index: 40;
