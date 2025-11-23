@@ -6,6 +6,7 @@ import { getServices, getConfig } from "@/lib/data";
 import { loadUserLocation, clearUserLocation } from "@/lib/location";
 import { filterServices, sortServices, getDefaultFilters } from "@/lib/filters";
 import { cacheServices, loadCachedServices } from "@/lib/cache";
+import { useChatContext } from "@/lib/ChatContext";
 
 import { Header } from "@/components/Header";
 import { CategorySelector } from "@/components/CategorySelector";
@@ -38,6 +39,9 @@ export default function HomePage() {
 
   // Config
   const config = getConfig();
+
+  // Chat context
+  const { setCity, setCategory, setFilters: setChatFilters, setVisibleServices, setSelectedService } = useChatContext();
 
   // Load data and check for cached version
   useEffect(() => {
@@ -135,6 +139,28 @@ export default function HomePage() {
     filteredServices,
     userLocation ? { lat: userLocation.lat, lng: userLocation.lng } : null
   );
+
+  // Update chat context when relevant state changes
+  useEffect(() => {
+    setCity(config.cityName, config.regionName);
+  }, [config.cityName, config.regionName, setCity]);
+
+  useEffect(() => {
+    setCategory(selectedCategory);
+  }, [selectedCategory, setCategory]);
+
+  useEffect(() => {
+    setChatFilters(filters);
+  }, [filters, setChatFilters]);
+
+  useEffect(() => {
+    setVisibleServices(sortedServices);
+  }, [sortedServices, setVisibleServices]);
+
+  // Clear selected service on home page
+  useEffect(() => {
+    setSelectedService(null);
+  }, [setSelectedService]);
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -6,6 +6,7 @@ import { Service } from "@/types";
 import { getOpenStatusText, getHoursTable } from "@/lib/hours";
 import { getCategoryLabel } from "@/lib/categories";
 import { loadUserLocation, formatDistance, calculateDistance } from "@/lib/location";
+import { useChatContext } from "@/lib/ChatContext";
 
 interface ServiceDetailClientProps {
   service: Service;
@@ -14,9 +15,16 @@ interface ServiceDetailClientProps {
 export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
   const [copied, setCopied] = useState(false);
   const [distance, setDistance] = useState<number | null>(null);
+  const { setSelectedService } = useChatContext();
 
   const openStatus = getOpenStatusText(service.hours);
   const hoursTable = getHoursTable(service.hours);
+
+  // Set this service as the selected service for chat context
+  useEffect(() => {
+    setSelectedService(service);
+    return () => setSelectedService(null);
+  }, [service, setSelectedService]);
 
   useEffect(() => {
     const location = loadUserLocation();
