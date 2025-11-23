@@ -648,6 +648,13 @@ select,
   }
 }
 
+@media (min-width: 768px) {
+  .modal-overlay {
+    align-items: center;
+    padding: var(--space-8);
+  }
+}
+
 .modal-content {
   background: var(--bg-elevated);
   border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
@@ -660,6 +667,14 @@ select,
 @media (min-height: 600px) {
   .modal-content {
     border-radius: var(--radius-2xl);
+  }
+}
+
+@media (min-width: 768px) {
+  .modal-content {
+    max-width: 500px;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-xl);
   }
 }
 
@@ -937,4 +952,69 @@ select,
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   font-weight: 600;
+}
+
+/* ========================================
+ * DESKTOP / LAPTOP RESPONSIVE STYLES
+ * ======================================== */
+
+/* Service card improvements for grid layout */
+@media (min-width: 768px) {
+  .service-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-card-content {
+    flex: 1;
+  }
+
+  /* Improved hover states on desktop */
+  .service-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .card-elevated:hover {
+    transform: translateY(-1px);
+  }
+
+  /* Better category scrolling on desktop - center when possible */
+  .category-scroll-container {
+    justify-content: flex-start;
+  }
+}
+
+/* Large screen enhancements */
+@media (min-width: 1024px) {
+  /* Increase base font size slightly for readability */
+  html {
+    font-size: 16px;
+  }
+
+  /* Enhanced card shadows on desktop */
+  .card-elevated {
+    box-shadow: var(--shadow-md);
+  }
+
+  .card-elevated:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .service-card:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Better spacing for filters on desktop */
+  .card-elevated .flex-wrap {
+    gap: var(--space-3);
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1280px) {
+  /* Subtle max-width for very wide monitors to maintain readability */
+  .service-card-description {
+    max-width: 90%;
+  }
 }

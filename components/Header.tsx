@@ -12,7 +12,7 @@ export function Header({ cityName, onLocationChange, onAddLocation }: HeaderProp
   return (
     <header className="header-gradient safe-area-top sticky top-0 z-40">
       {/* Main header content */}
-      <div className="px-5 pt-4 pb-5">
+      <div className="max-w-[420px] md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-5 md:px-8 pt-4 pb-5">
         {/* Top row: Brand and actions */}
         <div className="flex items-center justify-between mb-1">
           {/* Left: App name and city selector */}

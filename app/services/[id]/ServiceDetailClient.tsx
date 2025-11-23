@@ -110,7 +110,7 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
     <div className="min-h-screen bg-[var(--background)]">
       {/* Header */}
       <header className="header safe-area-top sticky top-0 z-40">
-        <div className="flex items-center gap-3">
+        <div className="max-w-[420px] md:max-w-3xl lg:max-w-4xl mx-auto flex items-center gap-3">
           <Link
             href="/"
             className="flex items-center justify-center w-12 h-12 -ml-2 hover:bg-white/10 active:bg-white/20 rounded-xl transition-colors"
@@ -136,7 +136,7 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
       </header>
 
       {/* Main content */}
-      <main className="px-5 py-5 space-y-4 safe-area-bottom">
+      <main className="max-w-[420px] md:max-w-3xl lg:max-w-4xl mx-auto px-5 md:px-8 py-5 space-y-4 safe-area-bottom">
         {/* Status and key info card */}
         <div className="card p-5">
           {/* Status and distance row */}

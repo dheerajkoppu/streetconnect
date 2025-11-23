@@ -270,7 +270,7 @@ export default function HomePage() {
         onAddLocation={handleAddLocation}
       />
 
-      <main className="flex-1 max-w-[420px] mx-auto px-5 pb-24 w-full">
+      <main className="flex-1 w-full max-w-[420px] md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-5 md:px-8 pb-24">
         {showLocationPrompt && !showOnboarding && (
           <div className="py-5">
             <LocationPrompt
