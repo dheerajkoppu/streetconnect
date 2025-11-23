@@ -8,9 +8,11 @@ import { filterServices, sortServices, getDefaultFilters } from "@/lib/filters";
 import { cacheServices, loadCachedServices } from "@/lib/cache";
 import { fetchLocalServices, reverseGeocode } from "@/lib/localServices";
 import { cacheServices as cacheOsmServices } from "@/lib/serviceCache";
+import { loadUserServices, addUserService } from "@/lib/userServices";
 import { useChatContext } from "@/lib/ChatContext";
 
 import { Header } from "@/components/Header";
+import { AddLocationModal } from "@/components/AddLocationModal";
 import { CategorySelector } from "@/components/CategorySelector";
 import { SearchFiltersCard } from "@/components/SearchFiltersCard";
 import { ServiceList } from "@/components/ServiceList";
@@ -26,6 +28,7 @@ export default function HomePage() {
   // Data state
   const [staticServices, setStaticServices] = useState<Service[]>([]);
   const [localServices, setLocalServices] = useState<Service[]>([]);
+  const [userServices, setUserServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingLocal, setIsLoadingLocal] = useState(false);
   const [isOffline, setIsOffline] = useState(false);
@@ -33,6 +36,7 @@ export default function HomePage() {
   // UI state
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showLocationPrompt, setShowLocationPrompt] = useState(false);
+  const [showAddLocation, setShowAddLocation] = useState(false);
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const [cityName, setCityName] = useState<string>("Los Angeles");
 
@@ -48,7 +52,7 @@ export default function HomePage() {
   // Chat context
   const { setCity, setCategory, setFilters: setChatFilters, setVisibleServices, setSelectedService } = useChatContext();
 
-  // Combine static and local services
+  // Combine static, local, and user-added services
   const services = useMemo(() => {
     // Deduplicate by checking if names are very similar
     const combined = [...staticServices];
@@ -60,8 +64,17 @@ export default function HomePage() {
         combined.push(local);
       }
     }
+    // Add user-added services (these always get included)
+    for (const userService of userServices) {
+      const isDuplicate = combined.some(
+        (s) => s.id === userService.id || s.name.toLowerCase() === userService.name.toLowerCase()
+      );
+      if (!isDuplicate) {
+        combined.push(userService);
+      }
+    }
     return combined;
-  }, [staticServices, localServices]);
+  }, [staticServices, localServices, userServices]);
 
   // Load static data
   useEffect(() => {
@@ -134,6 +147,14 @@ export default function HomePage() {
     fetchLocal();
   }, [userLocation, config.cityName]);
 
+  // Load user-added services on mount
+  useEffect(() => {
+    const savedUserServices = loadUserServices();
+    if (savedUserServices.length > 0) {
+      setUserServices(savedUserServices);
+    }
+  }, []);
+
   // Check for onboarding and location on mount
   useEffect(() => {
     const onboardingSeen = localStorage.getItem(ONBOARDING_KEY);
@@ -179,6 +200,15 @@ export default function HomePage() {
     setCityName(config.cityName);
     setShowLocationPrompt(true);
   }, [config.cityName]);
+
+  const handleAddLocation = useCallback(() => {
+    setShowAddLocation(true);
+  }, []);
+
+  const handleAddLocationSubmit = useCallback((service: Service) => {
+    const updatedServices = addUserService(service);
+    setUserServices(updatedServices);
+  }, []);
 
   const userCoords = useMemo(
     () => (userLocation ? { lat: userLocation.lat, lng: userLocation.lng } : null),
@@ -228,7 +258,17 @@ export default function HomePage() {
     <div className="min-h-screen bg-[var(--bg-base)] flex flex-col">
       {showOnboarding && <Onboarding onComplete={handleOnboardingComplete} />}
 
-      <Header cityName={cityName} onLocationChange={handleLocationChange} />
+      <AddLocationModal
+        isOpen={showAddLocation}
+        onClose={() => setShowAddLocation(false)}
+        onSubmit={handleAddLocationSubmit}
+      />
+
+      <Header
+        cityName={cityName}
+        onLocationChange={handleLocationChange}
+        onAddLocation={handleAddLocation}
+      />
 
       <main className="flex-1 max-w-[420px] mx-auto px-5 pb-24 w-full">
         {showLocationPrompt && !showOnboarding && (
