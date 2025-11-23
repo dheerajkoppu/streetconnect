@@ -755,11 +755,11 @@ select,
 
 .chat-bottom-sheet {
   position: fixed;
-  bottom: 40px;
+  bottom: 140px; /* Raised higher to avoid mobile keyboard overlap */
   left: 0;
   right: 0;
-  height: 65vh;
-  max-height: 550px;
+  height: 55vh;
+  max-height: 450px;
   background: var(--bg-base);
   border-radius: var(--radius-2xl); /* Rounded all corners */
   z-index: 50;

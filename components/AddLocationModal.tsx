@@ -295,7 +295,7 @@ export function AddLocationModal({
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-lg max-h-[90vh] bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+      <div className="relative w-full max-w-lg max-h-[95vh] sm:max-h-[90vh] bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <h2 className="text-lg font-semibold text-gray-900">
@@ -330,7 +330,7 @@ export function AddLocationModal({
         </div>
 
         {/* Form Content */}
-        <div className="flex-1 overflow-y-auto p-5">
+        <div className="flex-1 overflow-y-auto p-5 min-h-[350px]">
           {/* Errors */}
           {errors.length > 0 && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
