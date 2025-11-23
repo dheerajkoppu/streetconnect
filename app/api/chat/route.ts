@@ -232,41 +232,42 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Build messages for Claude
+    // Build messages for OpenAI
     const systemPrompt = buildSystemPrompt(context);
 
-    const claudeMessages = messages.map((msg) => ({
-      role: msg.role,
-      content: msg.content,
-    }));
+    const openaiMessages = [
+      { role: "system" as const, content: systemPrompt },
+      ...messages.map((msg) => ({
+        role: msg.role as "user" | "assistant",
+        content: msg.content,
+      })),
+    ];
 
-    // Call Claude API
-    const apiKey = process.env.ANTHROPIC_API_KEY;
+    // Call OpenAI API
+    const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: "API key not configured" },
+        { error: "API key not configured. Please set OPENAI_API_KEY environment variable." },
         { status: 500 }
       );
     }
 
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
+        "Authorization": `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
+        model: "gpt-4o-mini",
         max_tokens: 1024,
-        system: systemPrompt,
-        messages: claudeMessages,
+        messages: openaiMessages,
       }),
     });
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error("Claude API error:", errorData);
+      console.error("OpenAI API error:", errorData);
       return NextResponse.json(
         { error: "Failed to get response from AI" },
         { status: 500 }
@@ -274,7 +275,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json();
-    const assistantMessage = data.content[0]?.text || "I apologize, but I couldn't generate a response. Please try again.";
+    const assistantMessage = data.choices?.[0]?.message?.content || "I apologize, but I couldn't generate a response. Please try again.";
 
     return NextResponse.json({
       message: {
