@@ -10,8 +10,7 @@ import { useChatContext } from "@/lib/ChatContext";
 
 import { Header } from "@/components/Header";
 import { CategorySelector } from "@/components/CategorySelector";
-import { FilterBar } from "@/components/FilterBar";
-import { SearchBar } from "@/components/SearchBar";
+import { SearchFiltersCard } from "@/components/SearchFiltersCard";
 import { ServiceList } from "@/components/ServiceList";
 import { LocationPrompt } from "@/components/LocationPrompt";
 import { Onboarding } from "@/components/Onboarding";
@@ -176,55 +175,55 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
+    <div className="min-h-screen bg-[var(--bg-base)]">
       {/* Onboarding overlay */}
       {showOnboarding && <Onboarding onComplete={handleOnboardingComplete} />}
 
-      {/* Header */}
+      {/* ===== SECTION 1: Hero Header ===== */}
       <Header cityName={config.cityName} onLocationChange={handleLocationChange} />
 
-      {/* Main content */}
-      <main className="px-5 py-5 space-y-5 safe-area-bottom">
+      {/* Main content container - max width for mobile feel */}
+      <main className="max-w-[420px] mx-auto px-5 pb-24">
         {/* Location prompt */}
         {showLocationPrompt && !showOnboarding && (
-          <LocationPrompt
-            onLocationSet={handleLocationSet}
-            onSkip={handleLocationSkip}
-          />
+          <div className="py-5">
+            <LocationPrompt
+              onLocationSet={handleLocationSet}
+              onSkip={handleLocationSkip}
+            />
+          </div>
         )}
 
         {!showLocationPrompt && (
-          <>
-            {/* Category selector */}
-            <CategorySelector
-              selectedCategory={selectedCategory}
-              onSelectCategory={setSelectedCategory}
-            />
+          <div className="space-y-5 py-5">
+            {/* ===== SECTION 2: Controls ===== */}
+            <div className="space-y-4">
+              {/* Category tabs */}
+              <CategorySelector
+                selectedCategory={selectedCategory}
+                onSelectCategory={setSelectedCategory}
+              />
 
-            {/* Search bar */}
-            <SearchBar
-              value={searchQuery}
-              onChange={setSearchQuery}
-              placeholder="Search services..."
-            />
+              {/* Search + Filters card */}
+              <SearchFiltersCard
+                searchValue={searchQuery}
+                onSearchChange={setSearchQuery}
+                filters={filters}
+                onFilterChange={setFilters}
+                hasLocation={!!userLocation}
+              />
 
-            {/* Filters */}
-            <FilterBar
-              filters={filters}
-              onFilterChange={setFilters}
-              hasLocation={!!userLocation}
-            />
+              {/* Offline indicator */}
+              <CacheStatus isOffline={isOffline} />
+            </div>
 
-            {/* Cache status */}
-            <CacheStatus isOffline={isOffline} />
-
-            {/* Service list */}
+            {/* ===== SECTION 3: Results ===== */}
             <ServiceList
               services={sortedServices}
               userLocation={userCoords}
               isLoading={isLoading}
             />
-          </>
+          </div>
         )}
       </main>
     </div>

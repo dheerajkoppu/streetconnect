@@ -2,7 +2,6 @@
 
 import { ServiceCategory } from "@/types";
 import { CATEGORIES } from "@/lib/categories";
-import { CategoryButton } from "./CategoryButton";
 
 interface CategorySelectorProps {
   selectedCategory: ServiceCategory | null;
@@ -17,27 +16,60 @@ export function CategorySelector({
     <section className="w-full" aria-labelledby="category-heading">
       <h2
         id="category-heading"
-        className="section-title px-1"
+        className="text-lg font-bold text-[var(--text-primary)] mb-3 px-1"
       >
         What do you need?
       </h2>
+
+      {/* Horizontal scrollable tab strip */}
       <div
-        className="flex gap-3 overflow-x-auto pb-3 hide-scrollbar -mx-5 px-5"
-        role="group"
+        className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar -mx-5 px-5 snap-x snap-mandatory"
+        role="tablist"
         aria-label="Service categories"
       >
-        {CATEGORIES.map((category) => (
-          <CategoryButton
-            key={category.id}
-            category={category}
-            isSelected={selectedCategory === category.id}
-            onClick={() =>
-              onSelectCategory(
-                selectedCategory === category.id ? null : category.id
-              )
-            }
-          />
-        ))}
+        {/* "All" tab */}
+        <button
+          onClick={() => onSelectCategory(null)}
+          className={`chip chip-tab no-select snap-start flex-shrink-0 ${
+            selectedCategory === null
+              ? "chip-tab-active"
+              : "chip-tab-inactive"
+          }`}
+          role="tab"
+          aria-selected={selectedCategory === null}
+          aria-controls="service-list"
+        >
+          <span className="text-base" role="img" aria-hidden="true">
+            ✨
+          </span>
+          <span>All</span>
+        </button>
+
+        {/* Category tabs */}
+        {CATEGORIES.map((category) => {
+          const isSelected = selectedCategory === category.id;
+          return (
+            <button
+              key={category.id}
+              onClick={() =>
+                onSelectCategory(isSelected ? null : category.id)
+              }
+              className={`chip chip-tab no-select snap-start flex-shrink-0 ${
+                isSelected
+                  ? "chip-tab-active"
+                  : "chip-tab-inactive"
+              }`}
+              role="tab"
+              aria-selected={isSelected}
+              aria-controls="service-list"
+            >
+              <span className="text-base" role="img" aria-hidden="true">
+                {category.icon}
+              </span>
+              <span>{category.label}</span>
+            </button>
+          );
+        })}
       </div>
     </section>
   );

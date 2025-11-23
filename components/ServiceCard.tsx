@@ -32,55 +32,67 @@ export function ServiceCard({ service, userLocation }: ServiceCardProps) {
         `${service.address.street}, ${service.address.city}, ${service.address.state} ${service.address.postalCode}`
       )}`;
 
+  // Determine status badge class
+  const statusBadgeClass =
+    openStatus.color === "green"
+      ? "badge-open"
+      : openStatus.color === "red"
+      ? "badge-closed"
+      : "badge-closing";
+
   return (
-    <article className="service-card">
+    <article className="service-card card-interactive">
       {/* Main card content - tappable to go to detail */}
       <Link href={`/services/${service.id}`} className="block service-card-content">
-        {/* Title and distance row */}
+        {/* Top row: Name and distance */}
         <div className="flex justify-between items-start gap-3 mb-3">
-          <h3 className="service-card-title">{service.name}</h3>
+          <h3 className="service-card-title flex-1">{service.name}</h3>
           {distance !== null && (
-            <span className="text-sm font-semibold text-slate-500 whitespace-nowrap bg-slate-100 px-2 py-1 rounded-lg">
+            <span className="badge-distance whitespace-nowrap flex-shrink-0">
               {formatDistance(distance)}
             </span>
           )}
         </div>
 
-        {/* Category tags */}
-        <div className="flex flex-wrap gap-2 mb-3">
-          {service.categories.slice(0, 3).map((cat) => (
-            <span key={cat} className="tag tag-category">
+        {/* Category and status row */}
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          {/* Category badges */}
+          {service.categories.slice(0, 2).map((cat) => (
+            <span key={cat} className="tag-category">
               {getCategoryLabel(cat)}
             </span>
           ))}
-        </div>
 
-        {/* Open status - prominent display */}
-        <div className="mb-3">
-          <span
-            className={`
-              inline-block px-3 py-1.5 rounded-lg text-sm
-              ${openStatus.color === "green" ? "status-open" : ""}
-              ${openStatus.color === "red" ? "status-closed" : ""}
-              ${openStatus.color === "yellow" ? "status-closing" : ""}
-            `}
-          >
+          {/* Status badge */}
+          <span className={`badge-status ${statusBadgeClass}`}>
+            {openStatus.color === "green" && (
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-current mr-1.5 animate-pulse" />
+            )}
             {openStatus.text}
           </span>
         </div>
 
-        {/* Description */}
-        <p className="service-card-description line-clamp-2">
+        {/* Description - 2 lines max */}
+        <p className="service-card-description line-clamp-2 mb-3">
           {service.descriptionShort}
         </p>
+
+        {/* Meta: Today's hours */}
+        <div className="flex items-center gap-1.5 text-xs text-[var(--text-muted)]">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" strokeWidth={2} />
+            <path strokeLinecap="round" strokeWidth={2} d="M12 6v6l4 2" />
+          </svg>
+          <span>Today: {formatDayHours(getTodayHours(service.hours))}</span>
+        </div>
       </Link>
 
-      {/* Action buttons - large tap targets */}
-      <div className="flex border-t-2 border-slate-100">
+      {/* Action buttons row */}
+      <div className="flex border-t border-[var(--border-default)]">
         {service.phone && (
           <a
             href={`tel:${service.phone}`}
-            className="action-btn text-[var(--primary)] hover:bg-blue-50 active:bg-blue-100"
+            className="action-btn border-r border-[var(--border-default)]"
           >
             <svg
               className="w-5 h-5"
@@ -103,7 +115,7 @@ export function ServiceCard({ service, userLocation }: ServiceCardProps) {
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className={`action-btn text-[var(--primary)] hover:bg-blue-50 active:bg-blue-100 ${service.phone ? "border-l-2 border-slate-100" : ""}`}
+          className="action-btn"
         >
           <svg
             className="w-5 h-5"
@@ -132,11 +144,11 @@ export function ServiceCard({ service, userLocation }: ServiceCardProps) {
       {/* Expandable details toggle */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full py-3 px-5 text-sm font-medium text-slate-500 hover:bg-slate-50 active:bg-slate-100 flex items-center justify-center gap-2 border-t-2 border-slate-100 transition-colors"
+        className="w-full py-3 px-5 text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:bg-[var(--slate-50)] active:bg-[var(--slate-100)] flex items-center justify-center gap-2 border-t border-[var(--border-default)] transition-colors"
         aria-expanded={isExpanded}
         aria-controls={`details-${service.id}`}
       >
-        {isExpanded ? "Show less" : "Show more"}
+        {isExpanded ? "Show less" : "More details"}
         <svg
           className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
           fill="none"
@@ -157,65 +169,93 @@ export function ServiceCard({ service, userLocation }: ServiceCardProps) {
       {isExpanded && (
         <div
           id={`details-${service.id}`}
-          className="px-5 pb-5 space-y-4 border-t-2 border-slate-100 pt-4 animate-fade-in"
+          className="service-card-details animate-fade-in"
         >
-          {/* Address */}
-          <div>
-            <h4 className="text-sm font-semibold text-slate-700 mb-1">Address</h4>
-            <address className="text-slate-600 not-italic leading-relaxed">
-              {service.address.street}
-              <br />
-              {service.address.city}, {service.address.state}{" "}
-              {service.address.postalCode}
-            </address>
-          </div>
-
-          {/* Today's hours */}
-          <div>
-            <h4 className="text-sm font-semibold text-slate-700 mb-1">Today&apos;s hours</h4>
-            <p className="text-slate-600">
-              {formatDayHours(getTodayHours(service.hours))}
-            </p>
-          </div>
-
-          {/* Eligibility */}
-          {service.eligibility.description && (
+          <div className="space-y-4">
+            {/* Address */}
             <div>
-              <h4 className="text-sm font-semibold text-slate-700 mb-1">Who can come</h4>
-              <p className="text-slate-600">{service.eligibility.description}</p>
+              <h4 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wide mb-1">
+                Address
+              </h4>
+              <address className="text-sm text-[var(--text-secondary)] not-italic leading-relaxed">
+                {service.address.street}
+                <br />
+                {service.address.city}, {service.address.state}{" "}
+                {service.address.postalCode}
+              </address>
             </div>
-          )}
 
-          {/* Quick features */}
-          <div className="flex flex-wrap gap-2">
-            {service.flags.noIDRequired && (
-              <span className="tag tag-feature">No ID needed</span>
-            )}
-            {service.flags.lowBarrier && (
-              <span className="tag tag-feature">Low barrier</span>
-            )}
-            {service.accessibility.wheelchairAccessible && (
-              <span className="tag tag-feature">Wheelchair OK</span>
-            )}
-            {service.accessibility.petsAllowed && (
-              <span className="tag tag-feature">Pets OK</span>
-            )}
-          </div>
-
-          {/* Notes */}
-          {service.notes.length > 0 && (
+            {/* Today's hours */}
             <div>
-              <h4 className="text-sm font-semibold text-slate-700 mb-2">What to know</h4>
-              <ul className="space-y-1.5">
-                {service.notes.slice(0, 3).map((note, i) => (
-                  <li key={i} className="flex gap-2 text-slate-600">
-                    <span className="text-[var(--primary)] flex-shrink-0">•</span>
-                    <span>{note}</span>
-                  </li>
-                ))}
-              </ul>
+              <h4 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wide mb-1">
+                Today&apos;s Hours
+              </h4>
+              <p className="text-sm text-[var(--text-secondary)]">
+                {formatDayHours(getTodayHours(service.hours))}
+              </p>
             </div>
-          )}
+
+            {/* Eligibility */}
+            {service.eligibility.description && (
+              <div>
+                <h4 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wide mb-1">
+                  Who Can Come
+                </h4>
+                <p className="text-sm text-[var(--text-secondary)]">
+                  {service.eligibility.description}
+                </p>
+              </div>
+            )}
+
+            {/* Feature tags */}
+            {(service.flags.noIDRequired ||
+              service.flags.lowBarrier ||
+              service.accessibility.wheelchairAccessible ||
+              service.accessibility.petsAllowed) && (
+              <div className="flex flex-wrap gap-2">
+                {service.flags.noIDRequired && (
+                  <span className="tag-feature">No ID needed</span>
+                )}
+                {service.flags.lowBarrier && (
+                  <span className="tag-feature">Low barrier</span>
+                )}
+                {service.accessibility.wheelchairAccessible && (
+                  <span className="tag-feature">Wheelchair OK</span>
+                )}
+                {service.accessibility.petsAllowed && (
+                  <span className="tag-feature">Pets OK</span>
+                )}
+              </div>
+            )}
+
+            {/* Notes */}
+            {service.notes.length > 0 && (
+              <div>
+                <h4 className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wide mb-2">
+                  What to Know
+                </h4>
+                <ul className="space-y-1.5">
+                  {service.notes.slice(0, 3).map((note, i) => (
+                    <li key={i} className="flex gap-2 text-sm text-[var(--text-secondary)]">
+                      <span className="text-[var(--primary-500)] flex-shrink-0">•</span>
+                      <span>{note}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* View full details link */}
+            <Link
+              href={`/services/${service.id}`}
+              className="inline-flex items-center gap-1 text-sm font-semibold text-[var(--interactive-primary)] hover:underline mt-2"
+            >
+              View full details
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
         </div>
       )}
     </article>
