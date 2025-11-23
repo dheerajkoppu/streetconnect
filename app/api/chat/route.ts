@@ -259,23 +259,31 @@ export async function POST(request: NextRequest) {
         "Authorization": `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "gpt-5-nano",
+        model: "gpt-4o-mini",
         max_tokens: 1024,
         messages: openaiMessages,
       }),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      const errorData = await response.text();
-      console.error("OpenAI API error:", errorData);
+      console.error("OpenAI API error:", JSON.stringify(data, null, 2));
       return NextResponse.json(
-        { error: "Failed to get response from AI" },
-        { status: 500 }
+        { error: data.error?.message || "Failed to get response from AI" },
+        { status: response.status }
       );
     }
 
-    const data = await response.json();
-    const assistantMessage = data.choices?.[0]?.message?.content || "I apologize, but I couldn't generate a response. Please try again.";
+    const assistantMessage = data.choices?.[0]?.message?.content;
+
+    if (!assistantMessage) {
+      console.error("No content in OpenAI response:", JSON.stringify(data, null, 2));
+      return NextResponse.json(
+        { error: "AI returned an empty response" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       message: {

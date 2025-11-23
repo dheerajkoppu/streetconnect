@@ -166,11 +166,11 @@ export function ChatProvider({ children }: { children: ReactNode }) {
           }),
         });
 
-        if (!response.ok) {
-          throw new Error("Failed to send message");
-        }
-
         const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to send message");
+        }
 
         setState((prev) => {
           const newMessages = [...prev.messages, data.message];
@@ -183,10 +183,11 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         });
       } catch (error) {
         console.error("Chat error:", error);
+        const errorMessage = error instanceof Error ? error.message : "Unknown error";
         setState((prev) => ({
           ...prev,
           isLoading: false,
-          error: "Sorry, I couldn't get a response. Please try again.",
+          error: errorMessage,
         }));
       }
     },
