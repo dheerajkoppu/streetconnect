@@ -7,6 +7,7 @@ import { loadUserLocation, clearUserLocation } from "@/lib/location";
 import { filterServices, sortServices, getDefaultFilters } from "@/lib/filters";
 import { cacheServices, loadCachedServices } from "@/lib/cache";
 import { fetchLocalServices, reverseGeocode } from "@/lib/localServices";
+import { cacheServices as cacheOsmServices } from "@/lib/serviceCache";
 import { useChatContext } from "@/lib/ChatContext";
 
 import { Header } from "@/components/Header";
@@ -113,12 +114,16 @@ export default function HomePage() {
         }
 
         // Fetch nearby services from OpenStreetMap
+        // Pass location info so services have city/state filled in
         const nearby = await fetchLocalServices(
           userLocation.lat,
           userLocation.lng,
-          5000 // 5km radius
+          5000, // 5km radius
+          locationInfo ? { city: locationInfo.city, state: locationInfo.state } : undefined
         );
         setLocalServices(nearby);
+        // Cache OSM services for detail page navigation
+        cacheOsmServices(nearby);
       } catch (error) {
         console.error("Failed to fetch local services:", error);
       } finally {

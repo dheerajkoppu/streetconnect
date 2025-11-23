@@ -7,6 +7,14 @@ import { getOpenStatusText, getHoursTable } from "@/lib/hours";
 import { getCategoryLabel } from "@/lib/categories";
 import { loadUserLocation, formatDistance, calculateDistance } from "@/lib/location";
 import { useChatContext } from "@/lib/ChatContext";
+import { isOsmService } from "@/lib/serviceCache";
+
+interface EnrichedDetails {
+  descriptionLong: string;
+  eligibilityDetails: string;
+  notes: string[];
+  tips: string[];
+}
 
 interface ServiceDetailClientProps {
   service: Service;
@@ -15,6 +23,8 @@ interface ServiceDetailClientProps {
 export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
   const [copied, setCopied] = useState(false);
   const [distance, setDistance] = useState<number | null>(null);
+  const [enrichment, setEnrichment] = useState<EnrichedDetails | null>(null);
+  const [isEnriching, setIsEnriching] = useState(false);
   const { setSelectedService } = useChatContext();
 
   const openStatus = getOpenStatusText(service.hours);
@@ -39,6 +49,37 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
       setDistance(dist);
     }
   }, [service.address.lat, service.address.lng]);
+
+  // Fetch AI enrichment for OSM services
+  useEffect(() => {
+    if (!isOsmService(service.id)) return;
+
+    const fetchEnrichment = async () => {
+      setIsEnriching(true);
+      try {
+        const response = await fetch("/api/enrich", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            service,
+            cityName: service.address.city || "Unknown",
+            stateName: service.address.state || "",
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setEnrichment(data.enrichment);
+        }
+      } catch (error) {
+        console.error("Failed to fetch enrichment:", error);
+      } finally {
+        setIsEnriching(false);
+      }
+    };
+
+    fetchEnrichment();
+  }, [service]);
 
   const mapsUrl =
     service.address.lat && service.address.lng
@@ -128,8 +169,29 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
 
           {/* Description */}
           <p className="text-slate-700 leading-relaxed">
-            {service.descriptionLong || service.descriptionShort}
+            {enrichment?.descriptionLong || service.descriptionLong || service.descriptionShort}
           </p>
+
+          {/* Loading indicator for enrichment */}
+          {isEnriching && (
+            <div className="flex items-center gap-2 text-sm text-slate-500 mt-3">
+              <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+              Loading more details...
+            </div>
+          )}
+
+          {/* OSM service badge */}
+          {isOsmService(service.id) && (
+            <div className="mt-3 inline-flex items-center gap-1.5 text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">
+              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+              Found via OpenStreetMap
+            </div>
+          )}
         </div>
 
         {/* Action buttons - large and prominent */}
@@ -262,8 +324,10 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
         {/* Eligibility */}
         <section className="card p-5">
           <h2 className="font-bold text-slate-900 mb-3">Who can come</h2>
-          {service.eligibility.description && (
-            <p className="text-slate-700 mb-4 leading-relaxed">{service.eligibility.description}</p>
+          {(service.eligibility.description || enrichment?.eligibilityDetails) && (
+            <p className="text-slate-700 mb-4 leading-relaxed">
+              {service.eligibility.description || enrichment?.eligibilityDetails}
+            </p>
           )}
           <div className="space-y-2.5">
             {service.eligibility.minAge && (
@@ -328,7 +392,7 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
         </section>
 
         {/* Notes */}
-        {service.notes.length > 0 && (
+        {(service.notes.length > 0 || enrichment?.notes?.length) && (
           <section className="card p-5">
             <h2 className="font-bold text-slate-900 mb-4">What to know</h2>
             <ul className="space-y-3">
@@ -336,6 +400,32 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
                 <li key={i} className="flex gap-3 text-slate-700">
                   <span className="text-[var(--primary)] flex-shrink-0 font-bold">•</span>
                   <span>{note}</span>
+                </li>
+              ))}
+              {enrichment?.notes?.map((note, i) => (
+                <li key={`enriched-${i}`} className="flex gap-3 text-slate-700">
+                  <span className="text-[var(--primary)] flex-shrink-0 font-bold">•</span>
+                  <span>{note}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* Tips (from AI enrichment) */}
+        {enrichment?.tips && enrichment.tips.length > 0 && (
+          <section className="card p-5 bg-blue-50 border border-blue-100">
+            <h2 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              Helpful tips
+            </h2>
+            <ul className="space-y-3">
+              {enrichment.tips.map((tip, i) => (
+                <li key={i} className="flex gap-3 text-slate-700">
+                  <span className="text-blue-600 flex-shrink-0 font-bold">•</span>
+                  <span>{tip}</span>
                 </li>
               ))}
             </ul>

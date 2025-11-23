@@ -1,7 +1,6 @@
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { getServiceById, getAllServiceIds } from "@/lib/data";
-import { ServiceDetailClient } from "./ServiceDetailClient";
+import { DynamicServiceLoader } from "./DynamicServiceLoader";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -17,8 +16,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const service = getServiceById(id);
 
   if (!service) {
+    // For dynamic OSM services, we can't generate metadata at build time
+    // but we provide a generic title
     return {
-      title: "Service Not Found - StreetConnect",
+      title: "Service Details - StreetConnect",
+      description: "View service details and get directions",
     };
   }
 
@@ -28,13 +30,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
+// Enable dynamic rendering for OSM services
+export const dynamicParams = true;
+
 export default async function ServiceDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const service = getServiceById(id);
 
-  if (!service) {
-    notFound();
-  }
+  // Try to get static service first
+  const staticService = getServiceById(id) || null;
 
-  return <ServiceDetailClient service={service} />;
+  // Use the dynamic loader to handle both static and OSM services
+  return <DynamicServiceLoader serviceId={id} staticService={staticService} />;
 }
