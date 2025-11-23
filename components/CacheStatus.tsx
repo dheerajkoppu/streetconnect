@@ -18,19 +18,20 @@ export function CacheStatus({ isOffline }: CacheStatusProps) {
 
   return (
     <div
-      className={`text-xs px-3 py-1.5 rounded-full ${
+      className={`text-sm px-4 py-2.5 rounded-xl font-medium inline-flex items-center gap-2 ${
         isOffline
-          ? "bg-yellow-100 text-yellow-800"
-          : "bg-gray-100 text-gray-600"
+          ? "bg-[var(--warning-bg)] text-[var(--warning-text)]"
+          : "bg-slate-100 text-slate-600"
       }`}
+      role="status"
     >
       {isOffline ? (
-        <span className="flex items-center gap-1">
-          <span className="w-2 h-2 bg-yellow-500 rounded-full" />
-          Offline - showing cached data
-        </span>
+        <>
+          <span className="w-2.5 h-2.5 bg-amber-500 rounded-full animate-pulse" aria-hidden="true" />
+          <span>Offline - showing saved data</span>
+        </>
       ) : (
-        timestamp && <span>Updated: {timestamp}</span>
+        timestamp && <span>Last updated: {timestamp}</span>
       )}
     </div>
   );

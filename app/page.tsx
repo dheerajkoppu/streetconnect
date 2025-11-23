@@ -137,7 +137,7 @@ export default function HomePage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[var(--background)]">
       {/* Onboarding overlay */}
       {showOnboarding && <Onboarding onComplete={handleOnboardingComplete} />}
 
@@ -145,7 +145,7 @@ export default function HomePage() {
       <Header cityName={config.cityName} onLocationChange={handleLocationChange} />
 
       {/* Main content */}
-      <main className="px-4 py-4 space-y-4 pb-8 safe-area-bottom">
+      <main className="px-5 py-5 space-y-5 safe-area-bottom">
         {/* Location prompt */}
         {showLocationPrompt && !showOnboarding && (
           <LocationPrompt
@@ -166,7 +166,7 @@ export default function HomePage() {
             <SearchBar
               value={searchQuery}
               onChange={setSearchQuery}
-              placeholder="Search by name..."
+              placeholder="Search services..."
             />
 
             {/* Filters */}

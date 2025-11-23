@@ -16,23 +16,14 @@ export function CategoryButton({
   return (
     <button
       onClick={onClick}
-      className={`
-        flex flex-col items-center justify-center
-        min-w-[90px] h-[90px] p-3 rounded-xl
-        transition-all duration-150
-        no-select
-        ${
-          isSelected
-            ? "bg-blue-600 text-white shadow-lg scale-105"
-            : "bg-white text-gray-700 shadow-sm hover:shadow-md active:scale-95"
-        }
-      `}
+      className={`category-btn no-select ${isSelected ? "category-btn-selected" : ""}`}
       aria-pressed={isSelected}
+      aria-label={`${category.label}${isSelected ? " (selected)" : ""}`}
     >
-      <span className="text-3xl mb-1" role="img" aria-hidden="true">
+      <span className="category-btn-icon" role="img" aria-hidden="true">
         {category.icon}
       </span>
-      <span className="text-sm font-medium text-center leading-tight">
+      <span className="category-btn-label">
         {category.label}
       </span>
     </button>

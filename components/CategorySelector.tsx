@@ -14,9 +14,18 @@ export function CategorySelector({
   onSelectCategory,
 }: CategorySelectorProps) {
   return (
-    <div className="w-full">
-      <h2 className="text-lg font-semibold mb-3 px-1">What do you need?</h2>
-      <div className="flex gap-3 overflow-x-auto pb-2 hide-scrollbar -mx-4 px-4">
+    <section className="w-full" aria-labelledby="category-heading">
+      <h2
+        id="category-heading"
+        className="section-title px-1"
+      >
+        What do you need?
+      </h2>
+      <div
+        className="flex gap-3 overflow-x-auto pb-3 hide-scrollbar -mx-5 px-5"
+        role="group"
+        aria-label="Service categories"
+      >
         {CATEGORIES.map((category) => (
           <CategoryButton
             key={category.id}
@@ -30,6 +39,6 @@ export function CategorySelector({
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 }

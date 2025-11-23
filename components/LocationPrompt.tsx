@@ -32,7 +32,7 @@ export function LocationPrompt({ onLocationSet, onSkip }: LocationPromptProps) {
       };
       saveUserLocation(location);
       onLocationSet(location);
-    } catch (err) {
+    } catch {
       setError("Could not get your location. Please enter an address instead.");
       setShowManual(true);
     } finally {
@@ -71,14 +71,16 @@ export function LocationPrompt({ onLocationSet, onSkip }: LocationPromptProps) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 max-w-md mx-auto">
+    <div className="card p-6 max-w-md mx-auto animate-fade-in">
+      {/* Header */}
       <div className="text-center mb-6">
-        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-[var(--primary-light)] rounded-2xl flex items-center justify-center mx-auto mb-4">
           <svg
-            className="w-8 h-8 text-blue-600"
+            className="w-8 h-8 text-[var(--primary)]"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
@@ -94,26 +96,28 @@ export function LocationPrompt({ onLocationSet, onSkip }: LocationPromptProps) {
             />
           </svg>
         </div>
-        <h2 className="text-xl font-bold text-gray-900 mb-2">
+        <h2 className="text-xl font-bold text-slate-900 mb-2">
           Find services near you
         </h2>
-        <p className="text-gray-600">
-          Share your location to see the closest services first.
+        <p className="text-slate-600 leading-relaxed">
+          Share your location to see what&apos;s closest. This is optional.
         </p>
       </div>
 
+      {/* Error message */}
       {error && (
-        <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
+        <div className="bg-[var(--danger-bg)] text-[var(--danger-text)] px-4 py-3 rounded-xl mb-4 text-sm font-medium" role="alert">
           {error}
         </div>
       )}
 
       {!showManual ? (
         <div className="space-y-3">
+          {/* Primary CTA - Use Location */}
           <button
             onClick={handleUseMyLocation}
             disabled={isLoading}
-            className="w-full py-4 px-6 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 active:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+            className="btn btn-primary w-full"
           >
             {isLoading ? (
               <span className="animate-pulse">Finding you...</span>
@@ -124,12 +128,19 @@ export function LocationPrompt({ onLocationSet, onSkip }: LocationPromptProps) {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
                 Use my location
@@ -137,35 +148,43 @@ export function LocationPrompt({ onLocationSet, onSkip }: LocationPromptProps) {
             )}
           </button>
 
+          {/* Secondary option - Enter address */}
           <button
             onClick={() => setShowManual(true)}
-            className="w-full py-3 px-6 text-blue-600 font-medium hover:bg-blue-50 rounded-xl transition-colors"
+            className="w-full py-3.5 px-6 text-[var(--primary)] font-semibold hover:bg-[var(--primary-light)] rounded-xl transition-colors"
           >
             Enter address instead
           </button>
 
+          {/* Skip option */}
           <button
             onClick={onSkip}
-            className="w-full py-3 px-6 text-gray-500 hover:text-gray-700 transition-colors"
+            className="w-full py-3 px-6 text-slate-500 font-medium hover:text-slate-700 transition-colors"
           >
             Skip for now
           </button>
         </div>
       ) : (
         <form onSubmit={handleManualSubmit} className="space-y-3">
-          <input
-            type="text"
-            value={manualAddress}
-            onChange={(e) => setManualAddress(e.target.value)}
-            placeholder="Enter address, city, or ZIP code"
-            className="w-full py-3 px-4 border border-gray-300 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-            autoFocus
-          />
+          <div>
+            <label htmlFor="address-input" className="sr-only">
+              Enter address, city, or ZIP code
+            </label>
+            <input
+              id="address-input"
+              type="text"
+              value={manualAddress}
+              onChange={(e) => setManualAddress(e.target.value)}
+              placeholder="Enter address, city, or ZIP code"
+              className="w-full py-4 px-4 border-2 border-slate-200 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)]"
+              autoFocus
+            />
+          </div>
 
           <button
             type="submit"
             disabled={isLoading || !manualAddress.trim()}
-            className="w-full py-4 px-6 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 active:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="btn btn-primary w-full"
           >
             {isLoading ? "Searching..." : "Find services"}
           </button>
@@ -177,14 +196,14 @@ export function LocationPrompt({ onLocationSet, onSkip }: LocationPromptProps) {
                 setShowManual(false);
                 setError(null);
               }}
-              className="flex-1 py-3 px-6 text-gray-600 hover:bg-gray-100 rounded-xl transition-colors"
+              className="flex-1 py-3 px-4 text-slate-600 font-medium hover:bg-slate-100 rounded-xl transition-colors"
             >
               Back
             </button>
             <button
               type="button"
               onClick={onSkip}
-              className="flex-1 py-3 px-6 text-gray-500 hover:text-gray-700 transition-colors"
+              className="flex-1 py-3 px-4 text-slate-500 font-medium hover:text-slate-700 transition-colors"
             >
               Skip
             </button>
@@ -192,8 +211,11 @@ export function LocationPrompt({ onLocationSet, onSkip }: LocationPromptProps) {
         </form>
       )}
 
-      <p className="text-xs text-gray-400 text-center mt-4">
-        Your location stays on your device. We don&apos;t save it on any server.
+      {/* Privacy note */}
+      <p className="text-xs text-slate-400 text-center mt-5 leading-relaxed">
+        Your location stays on your device only.
+        <br />
+        We don&apos;t save it on any server.
       </p>
     </div>
   );
