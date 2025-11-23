@@ -717,7 +717,7 @@ select,
 
 .chat-fab {
   position: fixed;
-  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(80px + env(safe-area-inset-bottom, 0px)); /* Moved higher to avoid bottom bar */
   right: 16px;
   display: flex;
   align-items: center;
@@ -752,29 +752,31 @@ select,
 
 .chat-bottom-sheet {
   position: fixed;
-  bottom: 0;
+  bottom: 60px; /* Moved up to avoid bottom bar */
   left: 0;
   right: 0;
-  height: 70vh;
-  max-height: 600px;
+  height: 65vh; /* Slightly reduced height */
+  max-height: 550px;
   background: var(--bg-base);
-  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  border-radius: var(--radius-2xl) var(--radius-2xl) var(--radius-2xl) var(--radius-2xl); /* Rounded all corners since not at bottom */
   z-index: 50;
   display: flex;
   flex-direction: column;
   animation: slideUp 0.3s ease-out;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12), 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin: 0 8px; /* Add side margins */
 }
 
 @media (min-width: 768px) {
   .chat-bottom-sheet {
     top: 16px;
     right: 16px;
-    bottom: 16px;
+    bottom: 80px; /* Keep above bottom bar on desktop too */
     left: auto;
     width: 400px;
     height: auto;
     max-height: none;
+    margin: 0;
     border-radius: var(--radius-2xl);
     animation: scaleIn 0.3s ease-out;
   }
