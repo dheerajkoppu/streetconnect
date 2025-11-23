@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Location Pin - Primary Blue -->
+  <path d="M32 2C19.85 2 10 11.85 10 24c0 15.5 20 36 21.1 37.2a1.2 1.2 0 0 0 1.8 0C34 60 54 39.5 54 24 54 11.85 44.15 2 32 2z" fill="#2563eb"/>
+
+  <!-- Inner Circle - White background for heart -->
+  <circle cx="32" cy="24" r="14" fill="white"/>
+
+  <!-- Heart - Accent Amber -->
+  <path d="M32 34c-.5 0-1-.2-1.4-.5-5.3-4.8-8.6-8.5-8.6-12.5 0-3.3 2.5-6 5.5-6 1.7 0 3.3.9 4.5 2.3 1.2-1.4 2.8-2.3 4.5-2.3 3 0 5.5 2.7 5.5 6 0 4-3.3 7.7-8.6 12.5-.4.3-.9.5-1.4.5z" fill="#f59e0b"/>
+</svg>
