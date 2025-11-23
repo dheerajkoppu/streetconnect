@@ -298,7 +298,7 @@ function BottomSheetChat({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Input */}
-        <div className="px-4 py-3 border-t border-gray-200 bg-white safe-area-bottom">
+        <div className="px-4 py-3 border-t border-gray-200 bg-white rounded-b-[var(--radius-2xl)]">
           <ChatInput onSend={sendMessage} disabled={isLoading} />
         </div>
       </div>

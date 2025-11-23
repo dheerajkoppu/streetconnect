@@ -755,16 +755,17 @@ select,
   bottom: 40px;
   left: 0;
   right: 0;
-  height: 65vh; /* Slightly reduced height */
+  height: 65vh;
   max-height: 550px;
   background: var(--bg-base);
-  border-radius: var(--radius-2xl) var(--radius-2xl) var(--radius-2xl) var(--radius-2xl); /* Rounded all corners since not at bottom */
+  border-radius: var(--radius-2xl); /* Rounded all corners */
   z-index: 50;
   display: flex;
   flex-direction: column;
   animation: slideUp 0.3s ease-out;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12), 0 4px 20px rgba(0, 0, 0, 0.08);
-  margin: 0 8px; /* Add side margins */
+  margin: 0 8px;
+  overflow: hidden; /* Ensures children respect border-radius */
 }
 
 @media (min-width: 768px) {
