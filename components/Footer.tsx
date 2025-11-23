@@ -30,12 +30,6 @@ export function Footer() {
           >
             Terms of Service
           </Link>
-          <Link
-            href="/licenses"
-            className="text-sm text-[var(--primary-200)] hover:text-white transition-colors"
-          >
-            Licenses
-          </Link>
         </nav>
 
         {/* Divider */}
