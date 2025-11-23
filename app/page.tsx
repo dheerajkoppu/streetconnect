@@ -16,6 +16,7 @@ import { ServiceList } from "@/components/ServiceList";
 import { LocationPrompt } from "@/components/LocationPrompt";
 import { Onboarding } from "@/components/Onboarding";
 import { CacheStatus } from "@/components/CacheStatus";
+import { Footer } from "@/components/Footer";
 
 const ONBOARDING_KEY = "streetconnect_onboarding_seen";
 const LOCATION_PROMPTED_KEY = "streetconnect_location_prompted";
@@ -219,12 +220,12 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)]">
+    <div className="min-h-screen bg-[var(--bg-base)] flex flex-col">
       {showOnboarding && <Onboarding onComplete={handleOnboardingComplete} />}
 
       <Header cityName={cityName} onLocationChange={handleLocationChange} />
 
-      <main className="max-w-[420px] mx-auto px-5 pb-24">
+      <main className="flex-1 max-w-[420px] mx-auto px-5 pb-24 w-full">
         {showLocationPrompt && !showOnboarding && (
           <div className="py-5">
             <LocationPrompt
@@ -279,6 +280,8 @@ export default function HomePage() {
           </div>
         )}
       </main>
+
+      <Footer />
     </div>
   );
 }
